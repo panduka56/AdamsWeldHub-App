@@ -1,77 +1,34 @@
 'use client'
 
-import { useState } from 'react'
-import { ArrowLeft, Cylinder, Info, FileText, Shield, Gauge } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
-import type { Product } from '@/lib/types'
-import { products } from '@/lib/products'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { ArrowLeft, FileText, Gauge, Info, Settings, Boxes, Target } from 'lucide-react'
+import { Product } from '@/types/product'
+import ProductCard from '@/components/ProductCard'
 
-function parseProductContent(content: string) {
-  const details = {
-    gasType: content.match(/Gas Type: ([^\n]+)/)?.[1]?.trim(),
-    cylinderSize: content.match(/Cylinder Size: ([^\n]+)/)?.[1]?.trim(),
-    pressure: content.match(/Pressure: ([^\n]+)/)?.[1]?.trim(),
-    gasVolume: content.match(/Gas Volume: ([^\n]+)/)?.[1]?.trim(),
-    dimensions: content.match(/Cylinder Dimensions: ([^\n]+)/)?.[1]?.trim(),
-    compatibility: content.match(/Compatibility: ([^\n]+)/)?.[1]?.trim(),
-  }
-
-  // Extract features (sentences that describe capabilities/benefits)
-  const features = content
-    .split('\n')
-    .filter(line => 
-      line.includes(':') && 
-      !Object.keys(details).some(key => line.startsWith(key))
-    )
-    .map(line => line.split(': ')[1]?.trim())
-    .filter(Boolean)
-
-  // Extract applications (typically listed after "Applications:" or similar headers)
-  const applications = content
-    .split('\n')
-    .filter(line => 
-      !line.includes(':') && 
-      line.trim().length > 0 && 
-      !line.startsWith('•') &&
-      !line.startsWith('‣')
-    )
-    .map(line => line.trim())
-    .filter(Boolean)
-
-  return { details, features, applications }
+interface ProductPageProps {
+  params: { slug: string }
 }
 
-export default function ProductPage({ params }: { params: { slug: string } }) {
-  const [product] = useState<Product | null>(() => {
-    const foundProduct = products.find((p: Product) => p.Slug === params.slug)
-    if (foundProduct) {
-      const parsed = parseProductContent(foundProduct.Content)
-      return {
-        ...foundProduct,
-        details: parsed.details,
-        features: parsed.features,
-        applications: parsed.applications
-      }
-    }
-    return null
-  })
+async function getProductData(slug: string): Promise<{
+  product: Product | null;
+  relatedProducts: Product[];
+}> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products/${slug}`)
+  if (!res.ok) {
+    return { product: null, relatedProducts: [] }
+  }
+  return res.json()
+}
+
+export default async function ProductPage({ params }: ProductPageProps) {
+  const { product, relatedProducts } = await getProductData(params.slug)
 
   if (!product) {
-    return (
-      <div className="container mx-auto px-6 py-12">
-        <div className="text-center">
-          <h1 className="text-2xl font-[350] mb-4">Product not found</h1>
-          <Link href="/products">
-            <Button variant="outline" className="inline-flex items-center gap-2">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Products
-            </Button>
-          </Link>
-        </div>
-      </div>
-    )
+    return <div>Product not found</div>
   }
 
   return (
@@ -98,132 +55,123 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-        {/* Product Image - 5 columns */}
-        <div className="lg:col-span-5">
-          <div className="aspect-square bg-gradient-to-br from-[#2A2A2A] to-[#1A1A1A] 
-                        rounded-xl border border-[#FF8C42]/20 p-8
-                        flex items-center justify-center relative">
-            {product['Image URL'].split('|')[0] ? (
-              <img 
-                src={product['Image URL'].split('|')[0]}
-                alt={product.Title}
-                className="object-contain w-full h-full"
-              />
-            ) : (
-              <Cylinder className="w-48 h-48 text-[#FF8C42]/50" />
-            )}
-            {product.details?.gasType && (
-              <div className="absolute bottom-4 left-4 right-4 bg-black/60 p-3 rounded-lg
-                            text-[#FF8C42] text-center font-medium">
-                {product.details.gasType}
-              </div>
-            )}
-          </div>
+      {/* Hero Section */}
+      <div className="lg:grid lg:grid-cols-2 lg:gap-x-8 mb-12">
+        <div className="relative aspect-square rounded-xl overflow-hidden bg-gray-100 dark:bg-gray-800">
+          <Image
+            src={product.imageUrl.startsWith('http') ? product.imageUrl : '/images/placeholder.jpg'}
+            alt={product.name}
+            fill
+            className="object-contain p-4"
+            priority
+            sizes="(max-width: 768px) 100vw, 50vw"
+            onError={(e: any) => {
+              e.target.src = '/images/placeholder.jpg'
+            }}
+          />
         </div>
 
-        {/* Product Details - 7 columns */}
-        <div className="lg:col-span-7 space-y-8">
-          {/* Title and Categories */}
-          <div>
-            <h1 className="text-3xl font-[350] mb-4">{product.Title}</h1>
-            <div className="flex flex-wrap gap-2">
-              {product.categories.map((category, i) => (
-                <span key={i} className="text-sm px-3 py-1 rounded-full bg-[#FF8C42]/10 
-                                     text-[#FF8C42] border border-[#FF8C42]/20">
-                  {category}
-                </span>
-              ))}
+        <div className="mt-10 lg:mt-0">
+          <h1 className="text-3xl font-[350] mb-4">{product.name}</h1>
+          
+          {/* Quick Facts */}
+          <div className="grid grid-cols-2 gap-4 mb-8">
+            <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+              <div className="text-sm text-gray-500 dark:text-gray-400">Gas Type</div>
+              <div className="font-medium">{product.specifications['Gas Type']}</div>
+            </div>
+            <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+              <div className="text-sm text-gray-500 dark:text-gray-400">Cylinder Size</div>
+              <div className="font-medium">{product.specifications['Cylinder Size']}</div>
+            </div>
+            <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+              <div className="text-sm text-gray-500 dark:text-gray-400">Deposit</div>
+              <div className="font-medium">{product.specifications['Refundable Deposit']}</div>
+            </div>
+            <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+              <div className="text-sm text-gray-500 dark:text-gray-400">Output</div>
+              <div className="font-medium">{product.specifications['Output'] || 'N/A'}</div>
             </div>
           </div>
 
-          {/* Key Details Grid */}
-          <div className="grid grid-cols-2 gap-4">
-            {Object.entries(product.details || {}).map(([key, value]) => 
-              value ? (
-                <div key={key} className="p-4 rounded-lg bg-[#1A1A1A] border border-[#FF8C42]/20">
-                  <span className="text-sm text-[#E5E5E5]/60">
-                    {key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}
-                  </span>
-                  <p className="text-lg">{value}</p>
-                </div>
-              ) : null
-            )}
-          </div>
-
-          {/* Tabs Section */}
-          <Tabs defaultValue="features" className="w-full">
-            <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="features" className="flex items-center gap-2">
-                <Info className="w-4 h-4" />
-                Features
-              </TabsTrigger>
-              <TabsTrigger value="applications" className="flex items-center gap-2">
-                <Shield className="w-4 h-4" />
-                Applications
-              </TabsTrigger>
-              <TabsTrigger value="safety" className="flex items-center gap-2">
-                <Gauge className="w-4 h-4" />
-                Safety Info
-              </TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="features" className="mt-6">
-              <div className="grid gap-4">
-                {product.features?.map((feature, i) => (
-                  <div key={i} className="flex items-start gap-3 p-4 rounded-lg bg-[#1A1A1A]">
-                    <div className="w-2 h-2 rounded-full bg-[#FF8C42] mt-2" />
-                    <p className="text-[#E5E5E5]/80">{feature}</p>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="applications" className="mt-6">
-              <div className="grid gap-4">
-                {product.applications?.map((app, i) => (
-                  <div key={i} className="flex items-start gap-3 p-4 rounded-lg bg-[#1A1A1A]">
-                    <div className="w-2 h-2 rounded-full bg-[#FF8C42] mt-2" />
-                    <p className="text-[#E5E5E5]/80">{app}</p>
-                  </div>
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="safety" className="mt-6">
-              <div className="prose prose-invert max-w-none">
-                <div dangerouslySetInnerHTML={{ 
-                  __html: product.Content.split('Safety Information:')[1]?.split('</div>')[0] || 
-                         'Safety information not available.' 
-                }} />
-              </div>
-            </TabsContent>
-          </Tabs>
-
-          {/* Action Buttons */}
-          <div className="flex gap-4 pt-6">
-            <a 
-              href={`https://adamsgas.co.uk/product/${product.Slug}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1"
-            >
-              <Button className="w-full bg-[#FF8C42] hover:bg-[#FF8C42]/90 text-lg py-6">
-                Buy Now
-              </Button>
-            </a>
-            <Link href="/stockists" className="flex-1">
-              <Button 
-                variant="outline"
-                className="w-full border-[#FF8C42]/20 text-[#FF8C42] 
-                         hover:bg-[#FF8C42]/10 text-lg py-6"
-              >
-                Find Stockist
-              </Button>
-            </Link>
-          </div>
+          {/* Action Button */}
+          <Link href="/stockists">
+            <Button className="w-full bg-[#FF8C42] hover:bg-[#FF8C42]/90">
+              Find a Stockist
+            </Button>
+          </Link>
         </div>
       </div>
+
+      {/* Tabbed Content */}
+      <Tabs defaultValue="overview" className="mt-12">
+        <TabsList className="grid w-full grid-cols-4 mb-8">
+          <TabsTrigger value="overview" className="flex items-center gap-2">
+            <Info className="w-4 h-4" />
+            Overview
+          </TabsTrigger>
+          <TabsTrigger value="specifications" className="flex items-center gap-2">
+            <Settings className="w-4 h-4" />
+            Specifications
+          </TabsTrigger>
+          <TabsTrigger value="features" className="flex items-center gap-2">
+            <Boxes className="w-4 h-4" />
+            Features
+          </TabsTrigger>
+          <TabsTrigger value="applications" className="flex items-center gap-2">
+            <Target className="w-4 h-4" />
+            Applications
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="overview" className="mt-6">
+          <div className="prose dark:prose-invert max-w-none">
+            <p>{product.description}</p>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="specifications" className="mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {Object.entries(product.specifications).map(([key, value]) => (
+              value && (
+                <div key={key} className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                  <div className="text-sm text-gray-500 dark:text-gray-400">{key}</div>
+                  <div className="font-medium">{value}</div>
+                </div>
+              )
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="features" className="mt-6">
+          <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {product.keyFeatures.map((feature, index) => (
+              <li key={index} className="flex items-start gap-3">
+                <div className="w-2 h-2 rounded-full bg-[#FF8C42] mt-2 flex-shrink-0" />
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
+        </TabsContent>
+
+        <TabsContent value="applications" className="mt-6">
+          <div className="prose dark:prose-invert max-w-none">
+            <p>{product.usesAndApplications}</p>
+          </div>
+        </TabsContent>
+      </Tabs>
+
+      {/* Related Products */}
+      {relatedProducts.length > 0 && (
+        <div className="mt-16">
+          <h2 className="text-2xl font-[350] mb-8">Related Products</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {relatedProducts.map((relatedProduct) => (
+              <ProductCard key={relatedProduct.id} product={relatedProduct} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 } 

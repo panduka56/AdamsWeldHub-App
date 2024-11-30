@@ -1,172 +1,152 @@
 'use client'
 
-import { useState } from 'react'
-import { Input } from '@/components/ui/input'
-import { Search, Filter, Flame, Zap, Cylinder, LucideIcon } from 'lucide-react'
+import { getAllProducts } from '@/utils/products'
 import ProductCard from '@/components/ProductCard'
-import { products, getCategories } from '@/lib/products'
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+import { useState, useEffect } from 'react'
+import { Search, Loader2 } from 'lucide-react'
+import { Product } from '@/types/product'
 
-const ITEMS_PER_PAGE = 12
-
-const categoryIcons: Record<string, LucideIcon> = {
-  'MIG Welding Gas': Zap,
-  'TIG Welding Gas': Flame,
-  'Oxy Fuel Gas': Cylinder
-} as const
+const WELDING_CATEGORIES = [
+  'MIG Welding Gas',
+  'TIG Welding Gas',
+  'Oxy Fuel Gas'
+]
 
 export default function ProductsPage() {
+  const [products, setProducts] = useState<Product[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<string>('')
   const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [currentPage, setCurrentPage] = useState(1)
-  const categories = getCategories()
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
-  // Filter products
-  const filteredProducts = products.filter(product =>
-    (product.Title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-     product.Content.toLowerCase().includes(searchQuery.toLowerCase())) &&
-    (!selectedCategory || product.categories.includes(selectedCategory))
-  )
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        setLoading(true)
+        const allProducts = await getAllProducts()
+        // Filter to only include welding gases
+        const weldingProducts = allProducts.filter(product => 
+          product.categories.some(cat => WELDING_CATEGORIES.includes(cat))
+        )
+        if (weldingProducts.length === 0) {
+          throw new Error('No welding products found')
+        }
+        setProducts(weldingProducts)
+        setError(null)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to load products')
+        console.error('Error loading products:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadProducts()
+  }, [])
 
-  const pageCount = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE)
-  const currentProducts = filteredProducts.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  )
+  const filteredProducts = products.filter(product => {
+    const matchesCategory = selectedCategory ? 
+      product.categories.includes(selectedCategory) : true
+    const matchesSearch = product.name.toLowerCase()
+      .includes(searchQuery.toLowerCase())
+    return matchesCategory && matchesSearch
+  })
+
+  // Sort products by category
+  const sortedProducts = filteredProducts.sort((a, b) => {
+    const categoryOrder = {
+      'MIG Welding Gas': 1,
+      'TIG Welding Gas': 2,
+      'Oxy Fuel Gas': 3
+    }
+    const categoryA = a.categories[0]
+    const categoryB = b.categories[0]
+    return (categoryOrder[categoryA as keyof typeof categoryOrder] || 999) -
+           (categoryOrder[categoryB as keyof typeof categoryOrder] || 999)
+  })
+
+  if (loading) {
+    return (
+      <div className="container mx-auto px-6 py-12 flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-[#FF8C42]" />
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-6 py-12">
+        <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4 text-red-500">
+          {error}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="container mx-auto px-6 py-12">
-      <div className="mb-12">
-        <h1 className="text-4xl font-[350] mb-2">Professional Welding Gas Solutions</h1>
-        <p className="text-[#E5E5E5]/80 text-lg">
-          High-quality welding gases for MIG, TIG, and Oxy-Fuel applications
-        </p>
-      </div>
+      <h1 className="text-3xl font-[350] mb-8">Professional Welding Gas Solutions</h1>
+      <p className="text-gray-500 dark:text-gray-400 mb-8">
+        High-quality welding gases for MIG, TIG, and Oxy-Fuel applications
+      </p>
+      
+      <div className="lg:grid lg:grid-cols-4 lg:gap-8">
+        {/* Sidebar Navigation */}
+        <div className="hidden lg:block">
+          <div className="bg-[#222222]/80 rounded-lg p-4 mb-8">
+            <h2 className="text-xl font-[350] mb-4">Gas Categories</h2>
+            <div className="space-y-2">
+              <button
+                onClick={() => setSelectedCategory('')}
+                className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                  selectedCategory === '' 
+                    ? 'bg-[#FF8C42] text-white' 
+                    : 'hover:bg-[#FF8C42]/10'
+                }`}
+              >
+                All Welding Gases
+              </button>
+              {WELDING_CATEGORIES.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                    selectedCategory === category 
+                      ? 'bg-[#FF8C42] text-white' 
+                      : 'hover:bg-[#FF8C42]/10'
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
 
-      <div className="flex gap-8">
-        {/* Filters Sidebar */}
-        <div className="w-72 flex-shrink-0 space-y-6">
-          {/* Search */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#FF8C42]" />
-            <Input 
+        <div className="lg:col-span-3">
+          {/* Search Bar */}
+          <div className="relative mb-8">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
               placeholder="Search welding gases..."
-              className="pl-10 bg-[#1A1A1A] border-[#FF8C42]/20"
+              className="w-full pl-12 pr-4 py-3 rounded-lg bg-gray-100 dark:bg-gray-800 
+                       border border-gray-200 dark:border-gray-700"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
 
-          {/* Category Filters */}
-          <div className="bg-[#1A1A1A] rounded-lg p-4 border border-[#FF8C42]/20">
-            <h3 className="text-lg font-[350] mb-4 flex items-center gap-2">
-              <Filter className="w-4 h-4" />
-              Gas Categories
-            </h3>
-            
-            <div className="space-y-4">
-              <Button
-                variant={selectedCategory === null ? "default" : "outline"}
-                onClick={() => setSelectedCategory(null)}
-                className="w-full justify-start"
-              >
-                All Welding Gases
-              </Button>
-
-              <Accordion type="single" collapsible className="space-y-2">
-                {categories.map((category) => {
-                  const Icon = categoryIcons[category] || Cylinder
-                  return (
-                    <AccordionItem key={category} value={category}>
-                      <AccordionTrigger className="text-sm">
-                        <div className="flex items-center gap-2">
-                          <Icon className="w-4 h-4" />
-                          {category}
-                        </div>
-                      </AccordionTrigger>
-                      <AccordionContent>
-                        <Button
-                          variant={selectedCategory === category ? "default" : "outline"}
-                          onClick={() => setSelectedCategory(category)}
-                          className="w-full justify-start text-sm mt-2"
-                        >
-                          View All {category}
-                        </Button>
-                      </AccordionContent>
-                    </AccordionItem>
-                  )
-                })}
-              </Accordion>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div className="bg-[#1A1A1A] rounded-lg p-4 border border-[#FF8C42]/20">
-            <h3 className="text-lg font-[350] mb-4">Resources</h3>
-            <div className="space-y-2">
-              <Link href="/materials-guide">
-                <Button variant="outline" className="w-full justify-start">
-                  Welding Materials Guide
-                </Button>
-              </Link>
-              <Link href="/gas-flow-chart">
-                <Button variant="outline" className="w-full justify-start">
-                  Gas Flow Settings
-                </Button>
-              </Link>
-              <Link href="/about">
-                <Button variant="outline" className="w-full justify-start">
-                  About Us
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="flex-1">
           {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {currentProducts.map((product) => (
-              <ProductCard key={product.Slug} product={product} />
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {sortedProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
             ))}
           </div>
 
-          {/* Pagination */}
-          {pageCount > 1 && (
-            <div className="flex justify-center items-center gap-2">
-              <Button
-                variant="outline"
-                onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                disabled={currentPage === 1}
-              >
-                Previous
-              </Button>
-              
-              {Array.from({ length: pageCount }).map((_, i) => (
-                <Button
-                  key={i}
-                  variant={currentPage === i + 1 ? "default" : "outline"}
-                  onClick={() => setCurrentPage(i + 1)}
-                >
-                  {i + 1}
-                </Button>
-              ))}
-              
-              <Button
-                variant="outline"
-                onClick={() => setCurrentPage(Math.min(pageCount, currentPage + 1))}
-                disabled={currentPage === pageCount}
-              >
-                Next
-              </Button>
+          {/* No Results */}
+          {sortedProducts.length === 0 && (
+            <div className="text-center py-12 text-gray-500">
+              No products found matching your criteria
             </div>
           )}
         </div>
