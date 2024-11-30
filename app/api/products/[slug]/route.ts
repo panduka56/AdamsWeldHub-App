@@ -3,6 +3,18 @@ import path from 'path'
 import { NextResponse } from 'next/server'
 import { Product } from '@/types/product'
 
+// Add image domain transformation
+const transformImageUrl = (url: string) => {
+  if (!url) return '/images/placeholder.jpg'
+  if (url.startsWith('http')) {
+    return url.replace(
+      'adamsgas.co.uk/wp-content/uploads',
+      'adamsgas.com/images/products'
+    )
+  }
+  return url
+}
+
 export async function GET(
   request: Request,
   { params }: { params: { slug: string } }
@@ -24,7 +36,7 @@ export async function GET(
         record[header.trim()] = (values[i] || '').replace(/^"|"$/g, '').trim()
       })
 
-      const product = {
+      const product: Product = {
         id: record['Slug'],
         name: record['Product Name'],
         description: record['Applications'] || '',
@@ -50,16 +62,38 @@ export async function GET(
       allProducts.push(product)
     })
 
-    const relatedProducts = mainProduct !== null 
-      ? allProducts.filter(p => 
+    // Transform image URLs for main product
+    let transformedMainProduct: Product | null = null
+    if (mainProduct) {
+      transformedMainProduct = {
+        ...mainProduct as Product, // Explicit type assertion
+        imageUrl: transformImageUrl(mainProduct.imageUrl)
+      }
+    }
+
+    // Transform image URLs for related products
+    const relatedProducts = transformedMainProduct ? 
+      allProducts
+        .filter((p: Product) => 
           p.slug !== params.slug && 
-          p.categories[0] === mainProduct.categories[0]
-        ).slice(0, 3)
+          p.categories[0] === transformedMainProduct.categories[0]
+        )
+        .map((p: Product) => ({
+          ...p,
+          imageUrl: transformImageUrl(p.imageUrl)
+        }))
+        .slice(0, 3)
       : []
 
-    return NextResponse.json({ product: mainProduct, relatedProducts })
+    return NextResponse.json({ 
+      product: transformedMainProduct, 
+      relatedProducts 
+    })
   } catch (error) {
     console.error('Error reading product data:', error)
-    return NextResponse.json({ product: null, relatedProducts: [] }, { status: 500 })
+    return NextResponse.json({ 
+      product: null, 
+      relatedProducts: [] 
+    }, { status: 500 })
   }
 } 

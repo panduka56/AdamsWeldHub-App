@@ -20,7 +20,7 @@ export default function ProductCard({ product }: { product: Product }) {
         mainCategory === 'MIG Welding Gas' ? 'border-l-orange-500' :
         mainCategory === 'TIG Welding Gas' ? 'border-l-blue-500' :
         mainCategory === 'Oxy Fuel Gas' ? 'border-l-gray-500' :
-        mainCategory === 'Beer Gas' ? 'border-l-amber-500' :
+        mainCategory === 'Tools' ? 'border-l-purple-500' :
         'border-l-gray-400'
       }`}
       onMouseEnter={() => setIsHovered(true)}
@@ -65,6 +65,25 @@ export default function ProductCard({ product }: { product: Product }) {
           {product.specifications['Gas Type']} • {product.specifications['Cylinder Size']}
         </div>
       </div>
+
+      {mainCategory === 'Oxy Fuel Gas' && (
+        <div className="px-4 pb-4 text-sm">
+          <div className="flex flex-wrap gap-x-4 gap-y-2 text-gray-500 dark:text-gray-400">
+            <div>
+              <span className="font-medium">Welding:</span> {product.specifications['Welding'] || '✓'}
+            </div>
+            <div>
+              <span className="font-medium">Cutting:</span> {product.specifications['Cutting'] || '✓'}
+            </div>
+            <div>
+              <span className="font-medium">Heating:</span> {product.specifications['Heating'] || '✓'}
+            </div>
+            <div>
+              <span className="font-medium">Brazing:</span> {product.specifications['Brazing'] || '✓'}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hover Overlay */}
       <div 

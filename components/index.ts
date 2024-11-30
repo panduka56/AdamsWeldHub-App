@@ -1,1 +1,3 @@
-export { default as ProductCard } from './ProductCard' 
+export { default as BulkSavingsCalculator } from './BulkSavingsCalculator'
+export { default as DiscountCalculator } from './DiscountCalculator'
+export { default as QuickOrderForm } from './QuickOrderForm' 

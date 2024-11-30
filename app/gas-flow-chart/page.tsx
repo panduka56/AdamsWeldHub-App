@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowLeft, Beaker } from 'lucide-react'
+import { ArrowLeft, Beaker, Flame } from 'lucide-react'
 import GasFlowVisualizer from '@/components/GasFlowVisualizer'
 import NotesSection from '@/components/NotesSection'
 
@@ -40,7 +40,57 @@ const gasFlowRates: GasFlowRate[] = [
     flowRate: '12-15 L/min',
     notes: 'Use 100% Argon'
   },
+  {
+    process: 'Oxy-Fuel',
+    material: 'Mild Steel',
+    thickness: '0.5-12mm',
+    flowRate: 'O₂: 5-15 L/min, C₂H₂: 2-5 L/min',
+    notes: 'Welding - Neutral flame'
+  },
+  {
+    process: 'Oxy-Fuel',
+    material: 'Mild Steel',
+    thickness: '>12mm',
+    flowRate: 'O₂: 20-50 L/min, C₂H₂: 3-10 L/min',
+    notes: 'Cutting - Slightly oxidizing'
+  },
+  {
+    process: 'Oxy-Fuel',
+    material: 'Mild Steel',
+    thickness: 'Any',
+    flowRate: 'O₂: 50-100 L/min, C₂H₂: 20-50 L/min',
+    notes: 'Heating'
+  },
+  {
+    process: 'Oxy-Fuel',
+    material: 'Stainless Steel',
+    thickness: '<3mm',
+    flowRate: 'O₂: 10-20 L/min, H₂: 5-10 L/min',
+    notes: 'Clean flame for minimal oxidation'
+  }
   // Add more flow rates as needed
+]
+
+const oxyFuelGases = [
+  {
+    gas: 'Acetylene',
+    welding: '✓',
+    cutting: '✓',
+    heating: '✓',
+    brazing: '✓',
+    advantages: 'High flame temperature; precise control',
+    limitations: 'Expensive, requires careful handling'
+  },
+  {
+    gas: 'Propylene',
+    welding: '✗',
+    cutting: '✓',
+    heating: '✓',
+    brazing: '✓',
+    advantages: 'Fast cutting; economical for heating',
+    limitations: 'Not suitable for welding'
+  },
+  // ... add other gases
 ]
 
 export default function GasFlowChart() {
@@ -53,6 +103,13 @@ export default function GasFlowChart() {
         >
           <Beaker className="w-5 h-5 mr-2" />
           Materials Guide
+        </Link>
+        <Link 
+          href="/oxy-fuel-guide" 
+          className="inline-flex items-center text-[#FF8C42]"
+        >
+          <Flame className="w-5 h-5 mr-2" />
+          Oxy-Fuel Guide
         </Link>
         <Link 
           href="/" 
@@ -116,6 +173,41 @@ export default function GasFlowChart() {
           {/* Notes Section */}
           <div className="mt-8">
             <NotesSection />
+          </div>
+
+          <div className="mt-12">
+            <h2 className="text-2xl font-[350] mb-6">Oxy-Fuel Gas Comparison</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-[#FF8C42]/20">
+                    <th className="text-left py-4 px-6 text-[#FF8C42]">Gas</th>
+                    <th className="text-center py-4 px-6 text-[#FF8C42]">Welding</th>
+                    <th className="text-center py-4 px-6 text-[#FF8C42]">Cutting</th>
+                    <th className="text-center py-4 px-6 text-[#FF8C42]">Heating</th>
+                    <th className="text-center py-4 px-6 text-[#FF8C42]">Brazing</th>
+                    <th className="text-left py-4 px-6 text-[#FF8C42]">Advantages</th>
+                    <th className="text-left py-4 px-6 text-[#FF8C42]">Limitations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {oxyFuelGases.map((gas, index) => (
+                    <tr 
+                      key={index}
+                      className="border-b border-[#FF8C42]/10 hover:bg-[#FF8C42]/5 transition-colors"
+                    >
+                      <td className="py-4 px-6 text-[#E5E5E5]">{gas.gas}</td>
+                      <td className="py-4 px-6 text-center text-[#E5E5E5]">{gas.welding}</td>
+                      <td className="py-4 px-6 text-center text-[#E5E5E5]">{gas.cutting}</td>
+                      <td className="py-4 px-6 text-center text-[#E5E5E5]">{gas.heating}</td>
+                      <td className="py-4 px-6 text-center text-[#E5E5E5]">{gas.brazing}</td>
+                      <td className="py-4 px-6 text-[#E5E5E5]">{gas.advantages}</td>
+                      <td className="py-4 px-6 text-[#E5E5E5]/60">{gas.limitations}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

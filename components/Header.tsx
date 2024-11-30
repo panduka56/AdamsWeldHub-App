@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Sun, Moon, Calculator, BookOpen, Wrench, AlertTriangle, Gauge, Bookmark, Package, Scale, ShoppingCart, ChevronDown, X, Menu, Info, Percent } from 'lucide-react'
+import { Sun, Moon, Calculator, BookOpen, Wrench, AlertTriangle, Gauge, Bookmark, Package, Scale, ShoppingCart, ChevronDown, X, Menu, Info, Percent, Flame } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   DropdownMenu,
@@ -46,7 +46,7 @@ const toolsItems: NavItem[] = [
     description: 'Essential safety guidelines'
   },
   {
-    name: 'Gas Flow Cheat Sheet',
+    name: 'Gas Flow Chart',
     href: '/gas-flow-chart',
     icon: Gauge,
     description: 'Quick reference for optimal settings'
@@ -56,51 +56,27 @@ const toolsItems: NavItem[] = [
     href: '/notes',
     icon: Bookmark,
     description: 'Save important calculations and notes'
-  },
-  {
-    name: 'Bulk Savings',
-    href: '/bulk-savings',
-    icon: Calculator,
-    description: 'Calculate bulk purchase savings'
-  },
-  {
-    name: 'Calculate Discounts',
-    href: '/calculate-discounts',
-    icon: Percent,
-    description: 'Bulk order discount calculator'
-  },
-  {
-    name: 'Quick Order',
-    href: '/quick-order',
-    icon: ShoppingCart,
-    description: 'Place orders quickly'
-  },
+  }
 ]
 
 const productItems: NavItem[] = [
   {
-    name: 'Products',
-    href: '/products',
-    icon: Package,
-    description: 'Browse the complete product range'
+    name: 'MIG Welding Gas',
+    href: '/products?category=mig',
+    icon: Flame,
+    description: 'High-quality MIG welding gas mixtures'
   },
   {
-    name: 'Bulk Savings',
-    href: '/bulk-savings',
-    icon: Scale,
-    description: 'Volume discounts and offers'
+    name: 'TIG Welding Gas',
+    href: '/products?category=tig',
+    icon: Flame,
+    description: 'Premium TIG welding gas solutions'
   },
   {
-    name: 'Calculate Bulk Discounts',
-    href: '/bulk-calculator',
-    icon: Calculator,
-    description: 'Calculate savings for bulk orders'
-  },
-  {
-    name: 'Quick Order',
-    href: '/quick-order',
-    icon: ShoppingCart,
-    description: 'Fast ordering for regular customers'
+    name: 'Oxy-Fuel Gas',
+    href: '/products?category=oxy-fuel',
+    icon: Flame,
+    description: 'Professional oxy-fuel gas combinations'
   }
 ]
 
