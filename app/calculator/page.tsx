@@ -4,7 +4,7 @@ import { useState } from 'react'
 import WeldingGasCalculator from '@/components/WeldingGasCalculator'
 import { ChevronDown, ChevronUp, Flame } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { oxyFuelFlowRates, oxyFuelGases, materialRecommendations } from '@/lib/oxy-fuel-data'
+import { oxyFuelFlowRates } from '@/lib/oxy-fuel-data'
 
 const gasFlowRates = oxyFuelFlowRates
 

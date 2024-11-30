@@ -1,11 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Search, Loader2 } from 'lucide-react'
+import { Search } from 'lucide-react'
 import ProductCard from './ProductCard'
 import ProductsMenu from './ProductsMenu'
 import { Product } from '@/types/product'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
 const CATEGORIES = [
   'MIG Welding Gas',
@@ -21,7 +21,6 @@ interface ProductsListProps {
 export default function ProductsList({ initialProducts }: ProductsListProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('')
   const [searchQuery, setSearchQuery] = useState('')
-  const router = useRouter()
   const searchParams = useSearchParams()
   
   useEffect(() => {

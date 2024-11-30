@@ -1,3 +1,11 @@
-export { default as BulkSavingsCalculator } from './BulkSavingsCalculator'
-export { default as DiscountCalculator } from './DiscountCalculator'
-export { default as QuickOrderForm } from './QuickOrderForm' 
+'use client'
+
+import BulkSavingsCalculator from './BulkSavingsCalculator'
+import DiscountCalculator from './DiscountCalculator'
+import QuickOrderForm from './QuickOrderForm'
+
+export {
+  BulkSavingsCalculator,
+  DiscountCalculator,
+  QuickOrderForm
+} 

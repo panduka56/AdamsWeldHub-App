@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Sun, Moon, Calculator, BookOpen, Wrench, AlertTriangle, Gauge, Bookmark, Package, Scale, ShoppingCart, ChevronDown, X, Menu, Info, Percent, Flame } from 'lucide-react'
+import { Sun, Moon, Calculator, BookOpen, Wrench, AlertTriangle, Gauge, Bookmark, ChevronDown, X, Menu, Info, Flame } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   DropdownMenu,
@@ -16,7 +16,7 @@ import {
 interface NavItem {
   name: string
   href: string
-  icon: any
+  icon: React.ComponentType<{ className?: string }>
   description?: string
 }
 

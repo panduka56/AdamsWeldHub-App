@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, ChevronRight, Search, Shield, AlertTriangle, Flame, Zap, Hammer, Eye, Wind, BookOpen } from 'lucide-react'
+import { ArrowLeft, ChevronRight, Search, Shield, AlertTriangle, Users, Wrench } from 'lucide-react'
 import { Card, CardContent } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { safetyTips, categories, type SafetyTip } from '@/app/data/safetyTips'
@@ -11,68 +11,15 @@ import { Input } from "@/components/ui/input"
 
 const MotionCard = motion(Card) as typeof motion.div
 
-interface SafetyCategory {
-  id: string
-  title: string
-  icon: React.ElementType
-  description: string
-  tips: string[]
-}
-
-const safetyCategories: SafetyCategory[] = [
-  {
-    id: 'ppe',
-    title: 'Personal Protective Equipment',
-    icon: Shield,
-    description: 'Essential safety gear for welding operations',
-    tips: [
-      'Always wear flame-resistant clothing and gloves',
-      'Use appropriate welding helmet with correct shade number',
-      'Wear steel-toed boots for foot protection',
-      'Use respiratory protection when working with hazardous fumes',
-      'Ensure ear protection is worn in noisy environments'
-    ]
-  },
-  {
-    id: 'gas-handling',
-    title: 'Gas Cylinder Safety',
-    icon: Flame,
-    description: 'Proper handling and storage of welding gases',
-    tips: [
-      'Secure cylinders in upright position',
-      'Keep cylinders away from heat sources',
-      'Use proper regulators for each gas type',
-      'Never use grease or oil on oxygen equipment',
-      'Store fuel gases and oxygen separately'
-    ]
-  },
-  {
-    id: 'electrical',
-    title: 'Electrical Safety',
-    icon: Zap,
-    description: 'Prevention of electrical hazards',
-    tips: [
-      'Inspect all cables and connections before welding',
-      'Keep welding area dry to prevent shock',
-      'Never weld in wet conditions',
-      'Use proper grounding techniques',
-      'Maintain and replace worn cables promptly'
-    ]
-  },
-  {
-    id: 'workspace',
-    title: 'Workspace Safety',
-    icon: Hammer,
-    description: 'Creating and maintaining a safe welding environment',
-    tips: [
-      'Ensure proper ventilation',
-      'Remove flammable materials from welding area',
-      'Keep fire extinguisher nearby',
-      'Use welding screens to protect others',
-      'Maintain clear access to exits'
-    ]
+function getIconForCategory(category: string) {
+  const icons = {
+    'Personal Protection': Shield,
+    'Equipment Safety': Wrench,
+    'Workspace Management': Users,
+    'default': AlertTriangle
   }
-]
+  return icons[category as keyof typeof icons] || icons.default
+}
 
 export default function SafetyTipsPage() {
   const [selectedTip, setSelectedTip] = useState<SafetyTip | null>(null)
@@ -86,6 +33,11 @@ export default function SafetyTipsPage() {
     const matchesCategory = !selectedCategory || tip.category === selectedCategory
     return matchesSearch && matchesCategory
   })
+
+  const tips = filteredTips.map(tip => ({
+    ...tip,
+    icon: getIconForCategory(tip.category)
+  }))
 
   return (
     <motion.div 
@@ -146,7 +98,7 @@ export default function SafetyTipsPage() {
             </div>
             <ScrollArea className="h-[calc(100vh-200px)]">
               <AnimatePresence>
-                {filteredTips.map((tip) => (
+                {tips.map((tip) => (
                   <MotionCard
                     key={tip.id}
                     initial={{ opacity: 0, y: 20 }}

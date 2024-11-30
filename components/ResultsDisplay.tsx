@@ -62,10 +62,11 @@ export default function ResultsDisplay({
         <ul className="list-disc list-inside text-[#E5E5E5]/60 space-y-2">
           <li>Always wear appropriate personal protective equipment (PPE)</li>
           <li>Ensure proper ventilation in the welding area</li>
-          <li>Follow manufacturer's guidelines for gas handling and storage</li>
+          <li>Follow manufacturer&apos;s guidelines for gas handling and storage</li>
           <li>Regularly inspect equipment for leaks or damage</li>
         </ul>
       </div>
+      <p>Don&apos;t forget to check your settings!</p>
     </motion.div>
   )
 }

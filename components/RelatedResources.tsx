@@ -23,7 +23,7 @@ export default function RelatedResources({ currentPage }: RelatedResourcesProps)
     <div className="mt-8">
       <h2>Related Resources</h2>
       <ul>
-        {relatedLinks[currentPage]?.map((link, index) => (
+        {relatedLinks[currentPage]?.map((link) => (
           <li key={link.href}>
             <Link href={link.href}>{link.text}</Link>
           </li>

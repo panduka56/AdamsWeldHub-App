@@ -1,6 +1,6 @@
 import { Flame, Gauge } from 'lucide-react'
 
-const items = [
+export const navigationItems = [
   // ... existing items ...
   {
     title: "Gas Flow Chart",

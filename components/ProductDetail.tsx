@@ -1,11 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { ArrowLeft, FileText, Gauge, Info, Settings, Boxes, Target } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ArrowLeft, FileText, Gauge, Info, Settings, Boxes, Target } from 'lucide-react'
 import { Product } from '@/types/product'
 import ProductCard from '@/components/ProductCard'
 
@@ -49,8 +48,8 @@ export default function ProductDetail({ product, relatedProducts }: ProductDetai
             className="object-contain p-4"
             priority
             sizes="(max-width: 768px) 100vw, 50vw"
-            onError={(e: any) => {
-              e.target.src = '/images/placeholder.jpg'
+            onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+              e.currentTarget.src = '/images/placeholder.jpg'
             }}
           />
         </div>

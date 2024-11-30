@@ -9,14 +9,15 @@ const WELDING_CATEGORIES = [
 ]
 
 // Validate and filter welding products
-const validateProduct = (product: any): product is Product => {
+const validateProduct = (product: unknown): product is Product => {
+  if (!product || typeof product !== 'object') return false
+  const p = product as Record<string, unknown>
   return (
-    typeof product === 'object' &&
-    typeof product.Title === 'string' &&
-    typeof product.Content === 'string' &&
-    typeof product['Image URL'] === 'string' &&
-    typeof product['Product Categories'] === 'string' &&
-    typeof product.Slug === 'string'
+    typeof p.Title === 'string' &&
+    typeof p.Content === 'string' &&
+    typeof p['Image URL'] === 'string' &&
+    typeof p['Product Categories'] === 'string' &&
+    typeof p.Slug === 'string'
   )
 }
 
@@ -52,4 +53,5 @@ export const getFeaturedProducts = (): Product[] => {
 // Get product by slug
 export const getProductBySlug = (slug: string): Product | undefined => {
   return products.find(p => p.Slug === slug)
-} 
+}
+  

@@ -60,7 +60,7 @@ export async function GET() {
     const lines = fileContent.trim().split('\n')
     const headers = lines[0].split(',')
     
-    let products: Product[] = []
+    const products: Product[] = []
     
     lines.slice(1).forEach((line, index) => {
       if (!line.trim()) return

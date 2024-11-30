@@ -5,12 +5,14 @@ import BulkGasSavingsCalculator from '../components/BulkGasSavingsCalculator'
 import WeldingDefectsTroubleshooting from '../components/WeldingDefectsTroubleshooting'
 import QuickOrderTool from '../components/QuickOrderTool'
 import { Outfit } from 'next/font/google'
-import { Beaker, Calculator, Wrench, ShoppingCart, FileText, Bookmark, Shield, Flame, ArrowRight } from 'lucide-react'
-import { useState } from 'react'
+import { 
+  Beaker, Calculator, Wrench, ShoppingCart, 
+  FileText, Bookmark, Shield, Flame 
+} from 'lucide-react'
 import React from 'react'
 import Link from 'next/link'
-import NotesSection from '@/components/NotesSection'
 import { oxyFuelGases } from '@/lib/oxy-fuel-data'
+import { useState } from 'react'
 
 const outfit = Outfit({ subsets: ['latin'] })
 
@@ -27,7 +29,6 @@ interface Tool {
 
 export default function Home() {
   const [activeToolId, setActiveToolId] = useState<ToolId>(null)
-  const [showNotes] = useState(false)
 
   const tools: Tool[] = [
     { id: 'calculator', title: 'Gas Calculator', Component: WeldingGasCalculator, icon: Calculator, desc: 'Calculate optimal gas mix' },
@@ -259,7 +260,7 @@ export default function Home() {
                   </tr>
                 </thead>
                 <tbody>
-                  {oxyFuelGases.map((gas, index) => (
+                  {oxyFuelGases.map((gas) => (
                     <tr key={gas.gas} 
                         className="border-b border-gray-100 dark:border-[#FF8C42]/10">
                       <td className="py-3 px-4 text-sm text-gray-800 dark:text-[#E5E5E5]">{gas.gas}</td>

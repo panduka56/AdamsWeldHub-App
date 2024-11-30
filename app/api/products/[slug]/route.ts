@@ -64,10 +64,11 @@ export async function GET(
 
     // Transform image URLs for main product
     let transformedMainProduct: Product | null = null
-    if (mainProduct) {
+    if (mainProduct !== null) {
+      const typedProduct = mainProduct as Product
       transformedMainProduct = {
-        ...mainProduct as Product, // Explicit type assertion
-        imageUrl: transformImageUrl(mainProduct.imageUrl)
+        ...typedProduct,
+        imageUrl: transformImageUrl(typedProduct.imageUrl)
       }
     }
 
