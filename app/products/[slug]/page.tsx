@@ -1,17 +1,29 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Metadata } from 'next'
-import { getAllProducts } from '@/utils/products'
 import { generateProductSchema } from '@/utils/schema'
 import ProductDetail from '@/components/ProductDetail'
-import { Product } from '@/types/product'
+import type { Product } from '@/types/product'
+import { parseCSVProducts } from '@/utils/parseProducts'
+import { redirect, notFound } from 'next/navigation'
 
-export const revalidate = 3600
+export const dynamic = 'force-static'
+export const dynamicParams = false
 
 interface Props {
   params: { slug: string }
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { product } = await getProductData(params.slug)
+  // Handle invalid URLs
+  if (params.slug.startsWith('https://') || params.slug.includes('.jpg') || params.slug.includes('.png')) {
+    return {
+      title: 'Products | AdamsGas',
+      description: 'Browse our product catalog'
+    }
+  }
+
+  const products = parseCSVProducts()
+  const product = products.find(p => p.slug === params.slug)
   
   if (!product) {
     return {
@@ -26,17 +38,45 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: product.name,
       description: product.description,
-      images: [{ url: product.imageUrl }]
+      images: product.imageUrl ? [{ url: product.imageUrl }] : []
     }
   }
 }
 
-export default async function ProductPage({ params }: Props) {
-  const { product, relatedProducts } = await getProductData(params.slug)
+export async function generateStaticParams() {
+  const products = parseCSVProducts()
+  return products
+    .filter(product => 
+      product.slug && 
+      !product.slug.startsWith('https://') && 
+      !product.slug.includes('.jpg') && 
+      !product.slug.includes('.png')
+    )
+    .map((product) => ({
+      slug: product.slug,
+    }))
+}
+
+export default function ProductPage({ params }: Props) {
+  // Handle invalid URLs
+  if (params.slug.startsWith('https://') || params.slug.includes('.jpg') || params.slug.includes('.png')) {
+    redirect('/products')
+  }
+
+  const products = parseCSVProducts()
+  const product = products.find(p => p.slug === params.slug)
   
   if (!product) {
-    return <div>Product not found</div>
+    notFound()
   }
+
+  // Get related products (same category)
+  const relatedProducts = products
+    .filter(p => 
+      p.slug !== params.slug && 
+      p.categories?.some(cat => product.categories?.includes(cat))
+    )
+    .slice(0, 4)
 
   const productSchema = generateProductSchema(product)
 
@@ -49,22 +89,4 @@ export default async function ProductPage({ params }: Props) {
       <ProductDetail product={product} relatedProducts={relatedProducts} />
     </>
   )
-}
-
-export async function generateStaticParams() {
-  const products = await getAllProducts()
-  return products.map((product) => ({
-    slug: product.slug,
-  }))
-}
-
-async function getProductData(slug: string): Promise<{
-  product: Product | null;
-  relatedProducts: Product[];
-}> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/products/${slug}`)
-  if (!res.ok) {
-    return { product: null, relatedProducts: [] }
-  }
-  return res.json()
 } 

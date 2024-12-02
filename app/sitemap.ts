@@ -28,4 +28,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Add more static routes
     ...productUrls,
   ]
-} 
+}
+
+export const dynamic = 'force-static' 

@@ -11,39 +11,46 @@ export function parseCSVProducts(): Product[] {
     columns: true,
     skip_empty_lines: true,
     delimiter: ',',
+    relax_column_count: true,
+    trim: true,
+    relax_quotes: true,
+    skip_records_with_error: true
   })
 
   return records.map((record: any, index: number): Product => {
-    // Split features and applications into arrays
-    const keyFeatures = record['Key Features']?.split(';').map((f: string) => f.trim()) || []
-    const applications = record['Applications']?.split(',').map((a: string) => a.trim()) || []
+    // Split features and applications into arrays, handling potential semicolons and commas
+    const keyFeatures = record['Key Features']?.split(/[;,]/).map((f: string) => f.trim()).filter(Boolean) || []
+    const applications = record['Applications']?.split(/[;,]/).map((a: string) => a.trim()).filter(Boolean) || []
     
     // Create specifications object
-    const specifications: { [key: string]: string } = {
+    const specifications: {
+      'Gas Type': string;
+      'Cylinder Size': string;
+      'Refundable Deposit': string;
+      'Output'?: string;
+      [key: string]: string | undefined;
+    } = {
       'Gas Type': record['Gas Type'] || '',
       'Cylinder Size': record['Cylinder Size'] || '',
+      'Refundable Deposit': record['Refundable Deposit'] || '',
+      'Output': record['Output'] || '',
       'Pressure/Content': record['Pressure/Content'] || '',
       'Cylinder Dimensions': record['Cylinder Dimensions'] || '',
-      'Cylinder Weight': record['Cylinder Weight'] || '',
-      'Output': record['Output'] || '',
-      'Refundable Deposit': record['Refundable Deposit'] || '',
+      'Cylinder Weight': record['Cylinder Weight'] || ''
     }
 
-    // Determine category based on gas type
-    const categories = determineCategories(record['Gas Type'], record['Product Name'])
-
     return {
-      id: index + 1,
-      name: record['Product Name'],
+      id: (index + 1).toString(),
+      name: record['Product Name'] || '',
       description: `${record['Product Name']} - ${record['Gas Type']}`,
       specifications,
       keyFeatures,
       usesAndApplications: record['Typical Uses'] || '',
-      imageUrl: record['Image URL'],
-      categories,
-      slug: record['Slug'],
+      imageUrl: record['Image URL'] || '',
+      categories: determineCategories(record['Gas Type'] || '', record['Product Name'] || ''),
+      slug: record['Slug'] || ''
     }
-  })
+  }).filter((product: Product) => product.name && product.slug)
 }
 
 function determineCategories(gasType: string, productName: string): string[] {

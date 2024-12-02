@@ -1,10 +1,11 @@
-import { Metadata } from 'next'
-import { BulkSavingsCalculator } from '@/components'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Bulk Savings Calculator | AdamsGas',
-  description: 'Calculate your savings on bulk gas orders'
-}
+import dynamic from 'next/dynamic'
+
+const BulkSavingsCalculator = dynamic(
+  () => import('@/components/BulkSavingsCalculator'),
+  { ssr: false }
+)
 
 export default function BulkSavingsPage() {
   return (

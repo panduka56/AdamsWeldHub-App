@@ -1,10 +1,11 @@
-import { Metadata } from 'next'
-import { QuickOrderForm } from '@/components'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Quick Order | AdamsGas',
-  description: 'Place orders quickly and easily'
-}
+import dynamic from 'next/dynamic'
+
+const QuickOrderForm = dynamic(
+  () => import('@/components/QuickOrderForm'),
+  { ssr: false }
+)
 
 export default function QuickOrderPage() {
   return (

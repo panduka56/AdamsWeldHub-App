@@ -3,6 +3,12 @@ import { troubleshootingIssues, TroubleshootingIssue } from '@/app/data/troubles
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
+export async function generateStaticParams() {
+  return troubleshootingIssues.map((issue) => ({
+    id: issue.id,
+  }))
+}
+
 export default function IssuePage({ params }: { params: { id: string } }) {
   const issue = troubleshootingIssues.find((i: TroubleshootingIssue) => i.id === params.id)
   if (!issue) notFound()

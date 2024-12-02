@@ -15,4 +15,6 @@ export default async function ProductsPage() {
   const products = await getAllProducts()
   
   return <ProductsList initialProducts={products} />
-} 
+}
+
+export const dynamic = 'force-static' 

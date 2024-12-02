@@ -1,16 +1,12 @@
-import { OxyFuelChart } from '@/types/product';
+import { oxyFuelChartData } from '@/utils/oxy-fuel-data'
 
-async function getChartData(): Promise<OxyFuelChart> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/products/oxy-fuel-chart`);
-  if (!res.ok) throw new Error('Failed to fetch chart data');
-  return res.json();
-}
+export const dynamic = 'force-static'
 
-export default async function OxyFuelChartPage() {
-  const chartData = await getChartData();
+export default function OxyFuelChartPage() {
+  const data = oxyFuelChartData
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-6 py-12">
       <h1 className="text-3xl font-bold mb-6">Oxy-Fuel Gas Chart</h1>
       
       <section className="mb-8">
@@ -27,7 +23,7 @@ export default async function OxyFuelChartPage() {
               </tr>
             </thead>
             <tbody>
-              {chartData.entries.map((entry, idx) => (
+              {data.entries.map((entry, idx) => (
                 <tr key={idx}>
                   <td className="border p-2">{entry.gasMixture}</td>
                   <td className="border p-2">{entry.metalType}</td>

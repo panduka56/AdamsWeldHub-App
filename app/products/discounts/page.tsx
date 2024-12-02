@@ -1,10 +1,11 @@
-import { Metadata } from 'next'
-import { DiscountCalculator } from '@/components'
+'use client'
 
-export const metadata: Metadata = {
-  title: 'Discount Calculator | AdamsGas',
-  description: 'Calculate bulk order discounts'
-}
+import dynamic from 'next/dynamic'
+
+const DiscountCalculator = dynamic(
+  () => import('@/components/DiscountCalculator'),
+  { ssr: false }
+)
 
 export default function DiscountsPage() {
   return (

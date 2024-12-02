@@ -1,6 +1,4 @@
-import { NextResponse } from 'next/server';
-
-const oxyFuelChartData = {
+export const oxyFuelChartData = {
   entries: [
     {
       gasMixture: "Oxygen (O₂) / Acetylene (C₂H₂)",
@@ -12,8 +10,7 @@ const oxyFuelChartData = {
         fuelGasFlow: "Cutting: 3–10, Welding: 2–5, Heating: 20–50",
         notes: "High-temperature flame; ideal for welding and cutting."
       }
-    },
-    // Add other entries...
+    }
   ],
   materialRecommendations: {
     welding: {
@@ -23,25 +20,7 @@ const oxyFuelChartData = {
         oxygenFlow: "5–15 L/min",
         fuelGasFlow: "2–5 L/min",
         notes: "Use a neutral flame for clean, strong welds"
-      },
-      // Add other materials...
-    },
-    // Add other processes...
-  },
-  gasComparisons: [
-    {
-      gas: "Acetylene",
-      welding: true,
-      cutting: true,
-      heating: true,
-      brazing: true,
-      advantages: "High flame temperature; precise control.",
-      limitations: "Expensive, flammable, unstable."
-    },
-    // Add other gases...
-  ]
-};
-
-export async function GET() {
-  return NextResponse.json(oxyFuelChartData);
+      }
+    }
+  }
 } 
