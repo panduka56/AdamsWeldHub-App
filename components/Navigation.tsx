@@ -2,15 +2,9 @@
 
 import { useTheme } from 'next-themes'
 import { useState, useEffect } from 'react'
-import { Sun, Moon, Package, Calculator, Cylinder, Wrench, LucideIcon, Menu } from 'lucide-react'
+import { Sun, Moon, Package, Calculator, Cylinder, Wrench, LucideIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 
 interface NavigationItem {
   name: string

@@ -1,30 +1,41 @@
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import ProcessSelection from './ProcessSelection'
 import MaterialSelection from './MaterialSelection'
 import ThicknessInput from './ThicknessInput'
-import GasMixPreferences from './GasMixPreferences'
 import ResultsDisplay from './ResultsDisplay'
-import { Wrench, Beaker, Ruler, TestTubes, CheckCircle } from 'lucide-react'
+import AvailableCylinders from './AvailableCylinders'
+import { Product } from '@/types/product'
+import { Wrench, Beaker, Ruler, CheckCircle } from 'lucide-react'
+import { getGasRecommendation } from '@/lib/welding-utils'
+import type { WeldingProcess, MaterialType } from '@/types/welding'
+import type { GasRecommendation } from '@/app/data/welding-data/gas-recommendations'
 
 const steps = [
   { id: 'process', label: 'Process', icon: Wrench },
   { id: 'material', label: 'Material', icon: Beaker },
   { id: 'thickness', label: 'Thickness', icon: Ruler },
-  { id: 'gas', label: 'Gas Mix', icon: TestTubes },
   { id: 'results', label: 'Results', icon: CheckCircle }
 ]
 
-const processOptions = [
+const processOptions: Array<{
+  id: WeldingProcess
+  name: string
+  description: string
+}> = [
   { id: 'MIG', name: 'MIG Welding', description: 'Metal Inert Gas Welding' },
   { id: 'TIG', name: 'TIG Welding', description: 'Tungsten Inert Gas Welding' },
   { id: 'Flux-Cored', name: 'Flux-Cored', description: 'Flux-Cored Arc Welding' },
   { id: 'Oxy-Fuel', name: 'Oxy-Fuel', description: 'Oxy-Fuel Welding' }
 ]
 
-const materialOptions = [
+const materialOptions: Array<{
+  id: MaterialType
+  name: string
+  description: string
+}> = [
   { id: 'Mild-Steel', name: 'Mild Steel', description: 'Low Carbon Steel' },
   { id: 'Stainless-Steel', name: 'Stainless Steel', description: '300 Series Stainless' },
   { id: 'Aluminum', name: 'Aluminum', description: '6000 Series Aluminum' },
@@ -34,303 +45,188 @@ const materialOptions = [
   { id: 'Titanium', name: 'Titanium', description: 'Pure Titanium & Alloys' }
 ]
 
-interface GasMixOption {
-  thicknessRange: string;
-  gases: string[];
-}
-
-interface MaterialGasMixes {
-  [key: string]: GasMixOption[];
-}
-
-interface ProcessGasMixes {
-  [key: string]: MaterialGasMixes;
-}
-
-const gasMixOptions: ProcessGasMixes = {
-  'MIG': {
-    'Aluminum': [
-      {
-        thicknessRange: '<6',
-        gases: ['100% Argon'],
-      },
-      {
-        thicknessRange: '≥6',
-        gases: ['75% Helium / 25% Argon', '50% Argon / 50% Helium'],
-      },
-    ],
-    'Mild-Steel': [
-      {
-        thicknessRange: '<6',
-        gases: ['75% Argon / 25% CO₂', '90% Argon / 10% CO₂'],
-      },
-      {
-        thicknessRange: '≥6',
-        gases: ['100% CO₂', '75% Argon / 25% CO₂'],
-      },
-    ],
-    'Stainless-Steel': [
-      {
-        thicknessRange: 'All',
-        gases: ['98% Argon / 2% CO₂', '90% Helium / 7.5% Argon / 2.5% CO₂'],
-      },
-    ],
-    'Copper': [
-      {
-        thicknessRange: '<6',
-        gases: ['100% Argon'],
-      },
-      {
-        thicknessRange: '≥6',
-        gases: ['75% Helium / 25% Argon', '50% Argon / 50% Helium'],
-      },
-    ],
-  },
-  'TIG': {
-    'Mild-Steel': [
-      {
-        thicknessRange: '<6',
-        gases: ['100% Argon'],
-      },
-      {
-        thicknessRange: '≥6',
-        gases: ['75% Argon / 25% Helium'],
-      },
-    ],
-    'Stainless-Steel': [
-      {
-        thicknessRange: '<6',
-        gases: ['100% Argon'],
-      },
-      {
-        thicknessRange: '≥6',
-        gases: ['100% Argon', '97% Argon / 3% Hydrogen'],
-      },
-    ],
-    'Aluminum': [
-      {
-        thicknessRange: '<6',
-        gases: ['100% Argon'],
-      },
-      {
-        thicknessRange: '≥6',
-        gases: ['70% Argon / 30% Helium'],
-      },
-    ],
-    'Copper': [
-      {
-        thicknessRange: '<6',
-        gases: ['100% Argon'],
-      },
-      {
-        thicknessRange: '≥6',
-        gases: ['50% Argon / 50% Helium'],
-      },
-    ],
-    // Additional materials...
-  },
-  'Flux-Cored': {
-    'Mild-Steel': [
-      {
-        thicknessRange: 'All',
-        gases: ['100% CO₂', '75% Argon / 25% CO₂'],
-      },
-    ],
-    'Stainless-Steel': [
-      {
-        thicknessRange: 'All',
-        gases: ['98% Argon / 2% CO₂'],
-      },
-    ],
-    // Additional materials...
-  },
-  'Oxy-Fuel': {
-    'Mild-Steel': [
-      {
-        thicknessRange: 'All',
-        gases: ['Oxygen and Acetylene'],
-      },
-    ],
-    'Cast-Iron': [
-      {
-        thicknessRange: 'All',
-        gases: ['Oxygen and Acetylene'],
-      },
-    ],
-    // Additional materials...
-  },
-}
-
-function calculateRecommendations(
-  process: string,
-  material: string,
-  thickness: number,
-  preferences: string[]
-): string[] {
-  const options = gasMixOptions[process]?.[material]
-  if (!options) return []
-
-  const thicknessOption = options.find((option) => {
-    if (option.thicknessRange === 'All') return true
-    const value = parseFloat(option.thicknessRange.substring(1))
-    return option.thicknessRange.startsWith('<') 
-      ? thickness < value 
-      : thickness >= value
-  })
-
-  if (!thicknessOption) return []
-
-  // If no preferences, return all gases
-  if (!preferences.length) return thicknessOption.gases
-
-  // Filter gases based on preferences
-  return thicknessOption.gases.filter(gas => 
-    preferences.some(pref => 
-      gas.toLowerCase().includes(pref.toLowerCase())
-    )
-  )
-}
-
-function WeldingGasCalculator() {
+export default function WeldingGasCalculator() {
   const [currentStep, setCurrentStep] = useState(0)
-  const [selectedProcess, setSelectedProcess] = useState('')
-  const [selectedMaterial, setSelectedMaterial] = useState('')
+  const [selectedProcess, setSelectedProcess] = useState<WeldingProcess>('MIG')
+  const [selectedMaterial, setSelectedMaterial] = useState<MaterialType>('Mild-Steel')
   const [thickness, setThickness] = useState(0)
-  const [gasMixPreferences, setGasMixPreferences] = useState<string[]>([])
-  const [recommendedGases, setRecommendedGases] = useState<string[]>([])
+  const [recommendation, setRecommendation] = useState<GasRecommendation | null>(null)
+  const [products, setProducts] = useState<Product[]>([])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products')
+        const data = await response.json()
+        const transformedProducts = data.map((rawProduct: Product) => ({
+          ...rawProduct,
+          ProductCategories: Array.isArray(rawProduct.ProductCategories) 
+            ? rawProduct.ProductCategories 
+            : typeof rawProduct.ProductCategories === 'string'
+              ? (rawProduct.ProductCategories as string).split('|')
+              : []
+        } as Product))
+        setProducts(transformedProducts)
+      } catch (error) {
+        console.error('Failed to fetch products:', error)
+      }
+    }
+    fetchProducts()
+  }, [])
 
   const nextStep = () => {
     if (currentStep === steps.length - 1) return
-    if (currentStep === steps.length - 2) {
-      const gases = calculateRecommendations(
-        selectedProcess,
-        selectedMaterial,
-        thickness,
-        gasMixPreferences
-      )
-      setRecommendedGases(gases)
+    
+    if (currentStep === 2) {
+      // Don't auto-advance on step 3 (thickness)
+      // Let the Calculate button handle it
+      return
     }
-    setCurrentStep((prev) => prev + 1)
+    
+    setCurrentStep(prev => prev + 1)
   }
 
-  const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 0))
+  const prevStep = () => {
+    if (currentStep > 0) {
+      setCurrentStep(prev => prev - 1)
+    }
+  }
 
   const handleCalculate = () => {
-    const gases = calculateRecommendations(
+    const result = getGasRecommendation(
       selectedProcess,
       selectedMaterial,
-      thickness,
-      gasMixPreferences
+      thickness
     )
-    setRecommendedGases(gases)
-    nextStep()
-  }
-
-  const renderStep = () => {
-    switch (currentStep) {
-      case 0:
-        return <ProcessSelection options={processOptions} onSelect={setSelectedProcess} selected={selectedProcess} />
-      case 1:
-        return <MaterialSelection options={materialOptions} onSelect={setSelectedMaterial} selected={selectedMaterial} />
-      case 2:
-        return <ThicknessInput onChange={setThickness} value={thickness} />
-      case 3:
-        return <GasMixPreferences 
-          onChange={setGasMixPreferences} 
-          selected={gasMixPreferences}
-          process={selectedProcess}
-          material={selectedMaterial}
-        />
-      case 4:
-        return <ResultsDisplay
-          process={selectedProcess}
-          material={selectedMaterial}
-          thickness={thickness}
-          gasMixPreferences={gasMixPreferences}
-          recommendedGases={recommendedGases}
-        />
-      default:
-        return null
-    }
+    setRecommendation(result)
+    setCurrentStep(3) // Always advance to results, even if no recommendation
   }
 
   return (
-    <div className="space-y-12">
-      {/* Content Area with Progress Steps Inside */}
-      <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-gray-200 
-                    dark:border-[#FF8C42]/20 p-8 mx-auto max-w-3xl shadow-lg">
-        {/* Progress Steps - Now Inside Card */}
-        <div className="flex items-center justify-between mb-8">
-          {steps.map((step, index) => (
-            <div key={step.id} className="flex flex-col items-center">
-              <motion.button
-                onClick={() => setCurrentStep(index)}
-                className="relative group"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
+    <div className="w-full max-w-4xl mx-auto">
+      {/* Progress Steps */}
+      <div className="flex justify-between mb-8">
+        {steps.map((step, index) => {
+          const Icon = step.icon
+          return (
+            <div
+              key={step.id}
+              className={`flex items-center ${
+                index < steps.length - 1 ? 'flex-1' : ''
+              }`}
+            >
+              <div
+                className={`
+                  flex items-center justify-center w-10 h-10 rounded-full border-2
+                  ${
+                    currentStep >= index
+                      ? 'border-[#FF8C42] text-[#FF8C42]'
+                      : 'border-[#FF8C42]/20 text-[#E5E5E5]/40'
+                  }
+                `}
               >
-                <div className={`
-                  w-10 h-10 rounded-lg flex items-center justify-center
-                  transition-all duration-200 border-2
-                  ${index <= currentStep 
-                    ? 'bg-[#FF8C42]/10 border-[#FF8C42] text-[#FF8C42] dark:bg-[#FF8C42]/10 dark:border-[#FF8C42] dark:text-[#FF8C42]' 
-                    : 'bg-gray-200 border-gray-300 text-gray-500 dark:bg-[#222222]/80 dark:border-[#333333] dark:text-[#888888] hover:bg-gray-100 dark:hover:bg-[#222222]'
-                  }
-                `}>
-                  <step.icon className="w-5 h-5" />
-                </div>
-                <span className={`
-                  absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap
-                  text-xs transition-colors duration-200 font-medium
-                  ${index === currentStep 
-                    ? 'text-[#FF8C42] dark:text-[#FF8C42]' 
-                    : 'text-gray-600 group-hover:text-gray-800 dark:text-[#888888] dark:group-hover:text-[#E5E5E5]'
-                  }
-                `}>
-                  {step.label}
-                </span>
-              </motion.button>
+                <Icon className="w-5 h-5" />
+              </div>
+              {index < steps.length - 1 && (
+                <div
+                  className={`
+                    flex-1 h-[2px] mx-2
+                    ${
+                      currentStep > index
+                        ? 'bg-[#FF8C42]'
+                        : 'bg-[#FF8C42]/20'
+                    }
+                  `}
+                />
+              )}
             </div>
-          ))}
-        </div>
+          )
+        })}
+      </div>
 
-        {/* Content */}
-        <div className="mt-12">
-          <motion.div
-            key={currentStep}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {renderStep()}
-          </motion.div>
-        </div>
+      {/* Step Content */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentStep}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
+        >
+          {currentStep === 0 && (
+            <ProcessSelection
+              options={processOptions}
+              onSelect={setSelectedProcess}
+              selected={selectedProcess}
+            />
+          )}
 
-        {/* Navigation */}
-        <div className="flex justify-between mt-8 pt-6 border-t border-gray-200 dark:border-[#FF8C42]/20">
+          {currentStep === 1 && (
+            <MaterialSelection
+              options={materialOptions}
+              onSelect={setSelectedMaterial}
+              selected={selectedMaterial}
+            />
+          )}
+
+          {currentStep === 2 && (
+            <ThicknessInput
+              value={thickness}
+              onChange={setThickness}
+              onCalculate={handleCalculate}
+            />
+          )}
+
+          {currentStep === 3 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Left Column - Information */}
+              <div className="space-y-6">
+                <ResultsDisplay
+                  process={selectedProcess}
+                  material={selectedMaterial}
+                  thickness={thickness}
+                  recommendation={recommendation}
+                  setCurrentStep={setCurrentStep}
+                />
+              </div>
+
+              {/* Right Column - Products */}
+              {recommendation && (
+                <div>
+                  <AvailableCylinders
+                    process={selectedProcess}
+                    thickness={thickness}
+                    recommendation={recommendation}
+                    products={products}
+                  />
+                </div>
+              )}
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Navigation Buttons */}
+      <div className="flex justify-between mt-8">
+        {currentStep > 0 && (
           <button
             onClick={prevStep}
-            disabled={currentStep === 0}
-            className="px-6 py-2 rounded-lg border transition-colors
-                     border-[#FF8C42]/20 text-[#FF8C42] hover:bg-[#FF8C42]/10 
-                     disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+            className="px-6 py-2 rounded-lg bg-[#222222] text-[#E5E5E5]/60 
+                     hover:bg-[#FF8C42]/10 hover:text-[#FF8C42] transition-colors"
           >
-            Previous
+            Back
           </button>
+        )}
+        {currentStep < 2 && ( // Only show Next button for steps 0 and 1
           <button
-            onClick={currentStep === steps.length - 2 ? handleCalculate : nextStep}
-            disabled={currentStep === steps.length - 1}
-            className="px-6 py-2 rounded-lg transition-colors
-                     bg-[#FF8C42] text-white hover:bg-[#FF8C42]/90 
-                     disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={nextStep}
+            className="ml-auto px-6 py-2 rounded-lg bg-[#FF8C42] 
+                     text-white hover:bg-[#FF8C42]/90 transition-colors"
           >
-            {currentStep === steps.length - 2 ? 'Calculate' : 'Next'}
+            Next
           </button>
-        </div>
+        )}
       </div>
     </div>
   )
 }
-
-export default WeldingGasCalculator

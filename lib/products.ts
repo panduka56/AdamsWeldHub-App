@@ -1,55 +1,52 @@
-import { Product } from './types'
-import rawProductsData from './products.json'
+import { Product } from '@/types/product'
+import path from 'path'
+import { promises as fs } from 'fs'
 
-// Define welding-related categories
-const WELDING_CATEGORIES = [
-  'MIG Welding Gas',
-  'TIG Welding Gas',
-  'Oxy Fuel Gas'
-]
+export async function getProducts(): Promise<Product[]> {
+  try {
+    const filePath = path.join(process.cwd(), 'data', 'Cleaned_Welding_Gas_Products.csv')
+    const fileContent = await fs.readFile(filePath, 'utf-8')
+    
+    const rows = fileContent.split('\n').slice(1)
+    
+    const products = rows.map(row => {
+      const [ID, Title, ProductCategories, Slug] = row
+        .match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)
+        ?.map(str => str.replace(/^"|"$/g, '').trim()) || []
 
-// Validate and filter welding products
-const validateProduct = (product: any): product is Product => {
-  return (
-    typeof product === 'object' &&
-    typeof product.Title === 'string' &&
-    typeof product.Content === 'string' &&
-    typeof product['Image URL'] === 'string' &&
-    typeof product['Product Categories'] === 'string' &&
-    typeof product.Slug === 'string'
-  )
+      const gasMatch = Title?.match(/([\d.]+)L|(\d+)kg/)
+      const volumeSize = gasMatch ? gasMatch[0] : ''
+      const gasType = Title?.split(',')[0]?.replace('_', '')
+      
+      const categories = ProductCategories?.split('|').map(c => c.trim()) || []
+
+      return {
+        ID,
+        Title: Title?.replace('_', ''),
+        Content: `${Title?.replace('_', '')} - Available from Adams Gas. Professional welding supplies and gases.`,
+        ImageURL: `/images/products/${Slug}.jpg`,
+        ProductCategories: categories,
+        Slug,
+        categories,
+        GasMixPercentage: gasType,
+        VolumeLiters: volumeSize,
+        PressureBar: '200',
+        specifications: {
+          'Gas Type': gasType,
+          'Cylinder Size': volumeSize
+        }
+      } as Product
+    }).filter(product => 
+      product.ID && 
+      product.Title && 
+      product.ProductCategories && 
+      product.Slug
+    )
+
+    return products
+  } catch (error) {
+    console.error('Error in getProducts:', error)
+    return []
+  }
 }
-
-// Convert raw data to Product type and filter for welding products only
-export const products: Product[] = (Array.isArray(rawProductsData) ? rawProductsData : [])
-  .filter(validateProduct)
-  .filter(product => {
-    const categories = product['Product Categories'].split('|')
-    return categories.some(cat => WELDING_CATEGORIES.includes(cat.trim()))
-  })
-  .map(product => ({
-    ...product,
-    Content: product.Content.replace(/\n/g, ' ').trim(),
-    categories: product['Product Categories']
-      .split('|')
-      .map(cat => cat.trim())
-      .filter(cat => WELDING_CATEGORIES.includes(cat))
-  }))
-
-// Get unique welding categories
-export const getCategories = (): string[] => {
-  return WELDING_CATEGORIES
-}
-
-// Get featured welding products
-export const getFeaturedProducts = (): Product[] => {
-  return products
-    .filter(product => product.categories.includes('MIG Welding Gas') || 
-                      product.categories.includes('TIG Welding Gas'))
-    .slice(0, 3)
-}
-
-// Get product by slug
-export const getProductBySlug = (slug: string): Product | undefined => {
-  return products.find(p => p.Slug === slug)
-} 
+  

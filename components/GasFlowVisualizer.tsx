@@ -67,7 +67,7 @@ export default function GasFlowVisualizer() {
   useEffect(() => {
     // Reset flow rate to optimal minimum when process/material changes
     setFlowRate(config.optimalMin)
-  }, [process, material])
+  }, [config.optimalMin, process, material])
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">

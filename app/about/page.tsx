@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { 
-  Truck, Mail, Phone, MapPin, Clock, 
+  Mail, Phone, MapPin, Clock, 
   Facebook, Linkedin, Instagram,
   Factory, Car, Building2, Zap, Ship, Palette
 } from 'lucide-react'

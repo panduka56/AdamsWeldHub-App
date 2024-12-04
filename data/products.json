@@ -1,0 +1,862 @@
+[
+  {
+    "ID": "0",
+    "Title": "30% CO_ / 70% Nitrogen Mix, 10L Cylinder for Beer Dispensing - Supplied by Adams Gas",
+    "ImageURL": "/images/products/10l-cellar-beer-gas-30-70-mix-for-trade-users.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "10l-cellar-beer-gas-30-70-mix-for-trade-users",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "30% CO_ / 70% Nitrogen Mix",
+      "Cylinder Size": "10L"
+    }
+  },
+  {
+    "ID": "1",
+    "Title": "50% CO_ / 50% Nitrogen Mix, 10L Cylinder for Beer Dispensing - Supplied by Adams Gas",
+    "ImageURL": "/images/products/10l-cellar-beer-gas-5050-mix-for-trade-users.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "10l-cellar-beer-gas-5050-mix-for-trade-users",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "50% CO_ / 50% Nitrogen Mix",
+      "Cylinder Size": "10L"
+    }
+  },
+  {
+    "ID": "2",
+    "Title": "60% CO_ / 40% Nitrogen Mix, 10L Cylinder for Beer Dispensing - Supplied by Adams Gas",
+    "ImageURL": "/images/products/10l-cellar-beer-gas-6040-mix-for-trade-users.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "10l-cellar-beer-gas-6040-mix-for-trade-users",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "60% CO_ / 40% Nitrogen Mix",
+      "Cylinder Size": "10L"
+    }
+  },
+  {
+    "ID": "3",
+    "Title": "30% CO_ / 70% Nitrogen Mix, 20L Cylinder for Beer Dispensing - Supplied by Adams Gas",
+    "ImageURL": "/images/products/20l-cellar-beer-gas-3070-mix-for-trade-users.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "20l-cellar-beer-gas-3070-mix-for-trade-users",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "30% CO_ / 70% Nitrogen Mix",
+      "Cylinder Size": "20L"
+    }
+  },
+  {
+    "ID": "4",
+    "Title": "60% CO_ / 40% Nitrogen Mix, 20L Cylinder for Beer Dispensing - Supplied by Adams Gas",
+    "ImageURL": "/images/products/20l-cellar-beer-gas-6040-mix-for-trade-users.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "20l-cellar-beer-gas-6040-mix-for-trade-users",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "60% CO_ / 40% Nitrogen Mix",
+      "Cylinder Size": "20L"
+    }
+  },
+  {
+    "ID": "5",
+    "Title": "30% CO_ / 70% Nitrogen Mix, 50L Cylinder for Beer Dispensing - Supplied by Adams Gas",
+    "ImageURL": "/images/products/50l-cellar-beer-gas-3070-mix-for-trade-users.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "50l-cellar-beer-gas-3070-mix-for-trade-users",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "30% CO_ / 70% Nitrogen Mix",
+      "Cylinder Size": "50L"
+    }
+  },
+  {
+    "ID": "6",
+    "Title": "60% CO_ / 40% Nitrogen Mix, 50L Cylinder for Beer Dispensing - Supplied by Adams Gas",
+    "ImageURL": "/images/products/50l-cellar-beer-gas-6040-mix-for-trade-users.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "50l-cellar-beer-gas-6040-mix-for-trade-users",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "60% CO_ / 40% Nitrogen Mix",
+      "Cylinder Size": "50L"
+    }
+  },
+  {
+    "ID": "7",
+    "Title": "Carbon Dioxide Gas, 3.15kg Cylinder for Trade Use - Supplied by Adams Gas",
+    "ImageURL": "/images/products/carbon-dioxide-3-15kg-gas-refill-for-trade-users.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "carbon-dioxide-3-15kg-gas-refill-for-trade-users",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Carbon Dioxide Gas",
+      "Cylinder Size": "15kg"
+    }
+  },
+  {
+    "ID": "8",
+    "Title": "Carbon Dioxide Gas, 15kg Cylinder for Trade Use - Supplied by Adams Gas",
+    "ImageURL": "/images/products/carbon-dioxode-co2-gas-refil-15kg.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "carbon-dioxode-co2-gas-refil-15kg",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Carbon Dioxide Gas",
+      "Cylinder Size": "15kg"
+    }
+  },
+  {
+    "ID": "9",
+    "Title": "Carbon Dioxide Gas, 34kg Cylinder for Trade Use - Supplied by Adams Gas",
+    "ImageURL": "/images/products/carbon-dioxode-co2-gas-refil-34kg.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "carbon-dioxode-co2-gas-refil-34kg",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Carbon Dioxide Gas",
+      "Cylinder Size": "34kg"
+    }
+  },
+  {
+    "ID": "10",
+    "Title": "Carbon Dioxide Gas, 6.35kg Cylinder for Trade Use - Supplied by Adams Gas",
+    "ImageURL": "/images/products/carbon-dioxode-co2-gas-refill-6-35kg-trade-only.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "carbon-dioxode-co2-gas-refill-6-35kg-trade-only",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Carbon Dioxide Gas",
+      "Cylinder Size": "35kg"
+    }
+  },
+  {
+    "ID": "11",
+    "Title": "70% CO_ / 30% Nitrogen Mix, 2L Cylinder for Home Bar Beer Dispensing - Supplied by Adams Gas",
+    "ImageURL": "/images/products/2l-cellar-beer-gas-7030-mix-refill-for-home-bar.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "2l-cellar-beer-gas-7030-mix-refill-for-home-bar",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "70% CO_ / 30% Nitrogen Mix",
+      "Cylinder Size": "2L"
+    }
+  },
+  {
+    "ID": "12",
+    "Title": "60% CO_ / 40% Nitrogen Mix, 2L Cylinder for Home Bar Beer Dispensing - Supplied by Adams Gas",
+    "ImageURL": "/images/products/2l-cellar-beer-gas-refill-6040-mix-for-home-bar.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "2l-cellar-beer-gas-refill-6040-mix-for-home-bar",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "60% CO_ / 40% Nitrogen Mix",
+      "Cylinder Size": "2L"
+    }
+  },
+  {
+    "ID": "13",
+    "Title": "Carbon Dioxide Gas, 3.15kg Cylinder for Home Bar Use - Supplied by Adams Gas",
+    "ImageURL": "/images/products/carbon-dioxide-3-15kg-gas-refill-for-home-bar.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "carbon-dioxide-3-15kg-gas-refill-for-home-bar",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Carbon Dioxide Gas",
+      "Cylinder Size": "15kg"
+    }
+  },
+  {
+    "ID": "14",
+    "Title": "Carbon Dioxide Gas Refill, 1.5kg Cylinder for Home Bar Use - Supplied by Adams Gas",
+    "ImageURL": "/images/products/carbon-dioxode-co2-gas-refill-1-5kg-for-home-bar.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "carbon-dioxode-co2-gas-refill-1-5kg-for-home-bar",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Carbon Dioxide Gas Refill",
+      "Cylinder Size": "5kg"
+    }
+  },
+  {
+    "ID": "15",
+    "Title": "Carbon Dioxide Gas Refill, 6.35kg Cylinder for Home Bar Use - Supplied by Adams Gas",
+    "ImageURL": "/images/products/carbon-dioxode-co2-gas-refill-6-35kg-for-home-bar.jpg",
+    "ProductCategories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "Slug": "carbon-dioxode-co2-gas-refill-6-35kg-for-home-bar",
+    "categories": [
+      "Trade - Beer & Cellar Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Carbon Dioxide Gas Refill",
+      "Cylinder Size": "35kg"
+    }
+  },
+  {
+    "ID": "16",
+    "Title": "Propylene Gas, 2L Cylinder for Heating, Cutting, Brazing, and Lead Welding - Supplied by Adams Gas",
+    "ImageURL": "/images/products/propylene-gas-bottle-2l-for-heating-cutting-brazing-and-lead-welding.jpg",
+    "ProductCategories": [
+      "Oxy Fuel Gas"
+    ],
+    "Slug": "propylene-gas-bottle-2l-for-heating-cutting-brazing-and-lead-welding",
+    "categories": [
+      "Oxy Fuel Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Propylene Gas",
+      "Cylinder Size": "2L"
+    }
+  },
+  {
+    "ID": "17",
+    "Title": "20% CO_ / 80% Argon Mix, 10L 200Bar Cylinder for MIG Welding - Rent Free - Supplied by Adams Gas",
+    "ImageURL": "/images/products/rent-free-20-co2-argon-mix-refill-10l-200bar-for-mig-welding.jpg",
+    "ProductCategories": [
+      "MIG Welding Gas"
+    ],
+    "Slug": "rent-free-20-co2-argon-mix-refill-10l-200bar-for-mig-welding",
+    "categories": [
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "20% CO_ / 80% Argon Mix",
+      "Cylinder Size": "10L"
+    }
+  },
+  {
+    "ID": "18",
+    "Title": "5% CO_ / 95% Argon Mix, 10L 200Bar Cylinder for MIG Welding - Rent Free - Supplied by Adams Gas",
+    "ImageURL": "/images/products/hobby-gas-rent-free-5-co2-argon-mix-refill-10l-200bar.jpg",
+    "ProductCategories": [
+      "MIG Welding Gas"
+    ],
+    "Slug": "hobby-gas-rent-free-5-co2-argon-mix-refill-10l-200bar",
+    "categories": [
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "5% CO_ / 95% Argon Mix",
+      "Cylinder Size": "10L"
+    }
+  },
+  {
+    "ID": "19",
+    "Title": "Carbon Dioxide Gas, 3.15kg Cylinder for MIG Welding - Rent Free - Supplied by Adams Gas",
+    "ImageURL": "/images/products/hobby-gas-rent-free-carbon-dioxode-co2-gas-3-15kg-refill-only.jpg",
+    "ProductCategories": [
+      "MIG Welding Gas"
+    ],
+    "Slug": "hobby-gas-rent-free-carbon-dioxode-co2-gas-3-15kg-refill-only",
+    "categories": [
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Carbon Dioxide Gas",
+      "Cylinder Size": "15kg"
+    }
+  },
+  {
+    "ID": "20",
+    "Title": "Carbon Dioxide Gas, 6.35kg Cylinder for MIG Welding - Rent Free - Supplied by Adams Gas",
+    "ImageURL": "/images/products/hobby-gas-rent-free-carbon-dioxode-co2-gas-6-35kgrefill-only.jpg",
+    "ProductCategories": [
+      "MIG Welding Gas"
+    ],
+    "Slug": "hobby-gas-rent-free-carbon-dioxode-co2-gas-6-35kgrefill-only",
+    "categories": [
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Carbon Dioxide Gas",
+      "Cylinder Size": "35kg"
+    }
+  },
+  {
+    "ID": "21",
+    "Title": "Oxygen-Free Nitrogen Gas (OFN), 9.4L 137Bar Cylinder - Rent Free - Supplied by Adams Gas",
+    "ImageURL": "/images/products/hobby-gas-rent-free-oxygen-free-ofn-nitrogen-9l-137bar-refill-only.jpg",
+    "ProductCategories": [
+      "MIG Welding Gas"
+    ],
+    "Slug": "hobby-gas-rent-free-oxygen-free-ofn-nitrogen-9l-137bar-refill-only",
+    "categories": [
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Oxygen-Free Nitrogen Gas (OFN)",
+      "Cylinder Size": "9.4L"
+    }
+  },
+  {
+    "ID": "22",
+    "Title": "Pure Argon Gas, 10L Cylinder for MIG and TIG Welding - Supplied by Adams Gas",
+    "ImageURL": "/images/products/pure-argon-gas-bottle-10l-for-mig-and-tig-welding-supplied-by-adams-gas.jpg",
+    "ProductCategories": [
+      "TIG Welding Gas",
+      "MIG Welding Gas"
+    ],
+    "Slug": "pure-argon-gas-bottle-10l-for-mig-and-tig-welding-supplied-by-adams-gas",
+    "categories": [
+      "TIG Welding Gas",
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Pure Argon Gas",
+      "Cylinder Size": "10L"
+    }
+  },
+  {
+    "ID": "23",
+    "Title": "Oxygen Gas, 10L Cylinder for Heating, Cutting, Brazing, and Lead Welding - Supplied by Adams Gas",
+    "ImageURL": "/images/products/oxygen-gas-bottles.jpg",
+    "ProductCategories": [
+      "Oxy Fuel Gas"
+    ],
+    "Slug": "oxygen-gas-bottles",
+    "categories": [
+      "Oxy Fuel Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Oxygen Gas",
+      "Cylinder Size": "10L"
+    }
+  },
+  {
+    "ID": "24",
+    "Title": "5% CO_ / 95% Argon Mix, 50L 200Bar Cylinder for MIG Welding - Rent Free - Supplied by Adams Gas",
+    "ImageURL": "/images/products/rent-free-5-co2-in-argon-mix-50l-200bar-refill-only.jpg",
+    "ProductCategories": [
+      "MIG Welding Gas"
+    ],
+    "Slug": "rent-free-5-co2-in-argon-mix-50l-200bar-refill-only",
+    "categories": [
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "5% CO_ / 95% Argon Mix",
+      "Cylinder Size": "50L"
+    }
+  },
+  {
+    "ID": "25",
+    "Title": "20% CO_ / 80% Argon Mix, 50L Cylinder for MIG Welding - Rent Free - Supplied by Adams Gas",
+    "ImageURL": "/images/products/rent-free-20-co2-in-argon-mix-50l-refill-only.jpg",
+    "ProductCategories": [
+      "MIG Welding Gas"
+    ],
+    "Slug": "rent-free-20-co2-in-argon-mix-50l-refill-only",
+    "categories": [
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "20% CO_ / 80% Argon Mix",
+      "Cylinder Size": "50L"
+    }
+  },
+  {
+    "ID": "26",
+    "Title": "Oxygen-Free Nitrogen Gas (OFN), 50L 200Bar Cylinder - Rent Free - Supplied by Adams Gas",
+    "ImageURL": "/images/products/rent-free-oxygen-free-ofn-nitrogen-50l-200bar-refill-only.jpg",
+    "ProductCategories": [
+      "Nitrogen Bottles>Nitrogen for Food &amp; Wine Preservation",
+      "Nitrogen Bottles>Nitrogen for motor sports"
+    ],
+    "Slug": "rent-free-oxygen-free-ofn-nitrogen-50l-200bar-refill-only",
+    "categories": [
+      "Nitrogen Bottles>Nitrogen for Food &amp; Wine Preservation",
+      "Nitrogen Bottles>Nitrogen for motor sports"
+    ],
+    "specifications": {
+      "Gas Type": "Oxygen-Free Nitrogen Gas (OFN)",
+      "Cylinder Size": "50L"
+    }
+  },
+  {
+    "ID": "27",
+    "Title": "Oxygen Gas, 50L Cylinder for Heating, Cutting, Brazing, and Lead Welding - Supplied by Adams Gas",
+    "ImageURL": "/images/products/oxygen-gas-bottle-50l-for-heating-cutting-brazing-and-lead-welding-supplied-by-adams-gas.jpg",
+    "ProductCategories": [
+      "Oxy Fuel Gas"
+    ],
+    "Slug": "oxygen-gas-bottle-50l-for-heating-cutting-brazing-and-lead-welding-supplied-by-adams-gas",
+    "categories": [
+      "Oxy Fuel Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Oxygen Gas",
+      "Cylinder Size": "50L"
+    }
+  },
+  {
+    "ID": "28",
+    "Title": "Pure Argon Gas, 50L Cylinder for MIG and TIG Welding - Supplied by Adams Gas",
+    "ImageURL": "/images/products/pure-argon-gas-bottle-50l-for-mig-and-tig-welding-supplied-by-adams-gas.jpg",
+    "ProductCategories": [
+      "TIG Welding Gas",
+      "MIG Welding Gas"
+    ],
+    "Slug": "pure-argon-gas-bottle-50l-for-mig-and-tig-welding-supplied-by-adams-gas",
+    "categories": [
+      "TIG Welding Gas",
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Pure Argon Gas",
+      "Cylinder Size": "50L"
+    }
+  },
+  {
+    "ID": "29",
+    "Title": "Carbon Dioxide Gas, 34kg Cylinder for MIG Welding - Rent Free - Supplied by Adams Gas",
+    "ImageURL": "/images/products/rent-free-34kg-co2-gas-refill.jpg",
+    "ProductCategories": [
+      "MIG Welding Gas"
+    ],
+    "Slug": "rent-free-34kg-co2-gas-refill",
+    "categories": [
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Carbon Dioxide Gas",
+      "Cylinder Size": "34kg"
+    }
+  },
+  {
+    "ID": "30",
+    "Title": "Propylene Gas, 20L Cylinder for Heating, Cutting, Brazing, and Lead Welding - Supplied by Adams Gas",
+    "ImageURL": "/images/products/propylene-gas-bottle20l-for-heating-cutting-brazing-and-lead-welding.jpg",
+    "ProductCategories": [
+      "Oxy Fuel Gas"
+    ],
+    "Slug": "propylene-gas-bottle20l-for-heating-cutting-brazing-and-lead-welding",
+    "categories": [
+      "Oxy Fuel Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Propylene Gas",
+      "Cylinder Size": "20L"
+    }
+  },
+  {
+    "ID": "31",
+    "Title": "5% CO_ / 95% Argon Mix, 20L Cylinder for MIG Welding - Supplied by Adams Gas",
+    "ImageURL": "/images/products/5-co2-in-argon-mix-20l-gas-bottle-for-mig-welding.jpg",
+    "ProductCategories": [
+      "MIG Welding Gas"
+    ],
+    "Slug": "5-co2-in-argon-mix-20l-gas-bottle-for-mig-welding",
+    "categories": [
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "5% CO_ / 95% Argon Mix",
+      "Cylinder Size": "20L"
+    }
+  },
+  {
+    "ID": "32",
+    "Title": "20% CO_ / 80% Argon Mix, 20L 200Bar Cylinder for MIG Welding - Rent Free - Supplied by Adams Gas",
+    "ImageURL": "/images/products/rent-free-20-co2-in-argon-mix-20l-refill-only.jpg",
+    "ProductCategories": [
+      "MIG Welding Gas"
+    ],
+    "Slug": "rent-free-20-co2-in-argon-mix-20l-refill-only",
+    "categories": [
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "20% CO_ / 80% Argon Mix",
+      "Cylinder Size": "20L"
+    }
+  },
+  {
+    "ID": "33",
+    "Title": "Oxygen-Free Nitrogen Gas (OFN), 20L 200Bar Cylinder - Rent Free - Supplied by Adams Gas",
+    "ImageURL": "/images/products/rent-free-oxygen-free-ofn-nitrogen-20l-200bar-refill-only.jpg",
+    "ProductCategories": [
+      "MIG Welding Gas"
+    ],
+    "Slug": "rent-free-oxygen-free-ofn-nitrogen-20l-200bar-refill-only",
+    "categories": [
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Oxygen-Free Nitrogen Gas (OFN)",
+      "Cylinder Size": "20L"
+    }
+  },
+  {
+    "ID": "34",
+    "Title": "Oxygen Gas, 20L Cylinder for Heating, Cutting, Brazing, and Lead Welding - Supplied by Adams Gas",
+    "ImageURL": "/images/products/oxygen-gas-bottle-20l-for-heating-cutting-brazing-and-lead-welding-supplied-by-adams-gas.jpg",
+    "ProductCategories": [
+      "Oxy Fuel Gas"
+    ],
+    "Slug": "oxygen-gas-bottle-20l-for-heating-cutting-brazing-and-lead-welding-supplied-by-adams-gas",
+    "categories": [
+      "Oxy Fuel Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Oxygen Gas",
+      "Cylinder Size": "20L"
+    }
+  },
+  {
+    "ID": "35",
+    "Title": "Pure Argon Gas, 20L Cylinder for MIG and TIG Welding - Supplied by Adams Gas",
+    "ImageURL": "/images/products/pure-argon-gas-bottle-20l-for-mig-and-tig-welding-supplied-by-adams-gas.jpg",
+    "ProductCategories": [
+      "TIG Welding Gas",
+      "MIG Welding Gas"
+    ],
+    "Slug": "pure-argon-gas-bottle-20l-for-mig-and-tig-welding-supplied-by-adams-gas",
+    "categories": [
+      "TIG Welding Gas",
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Pure Argon Gas",
+      "Cylinder Size": "20L"
+    }
+  },
+  {
+    "ID": "36",
+    "Title": "5% CO_ / 95% Argon Mix, 2L 200Bar Cylinder for MIG Welding - Rent Free - Supplied by Adams Gas",
+    "ImageURL": "/images/products/porta-gas-rent-free-5-co2-argon-mix-refill-2l-200bar.jpg",
+    "ProductCategories": [
+      "MIG Welding Gas"
+    ],
+    "Slug": "porta-gas-rent-free-5-co2-argon-mix-refill-2l-200bar",
+    "categories": [
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "5% CO_ / 95% Argon Mix",
+      "Cylinder Size": "2L"
+    }
+  },
+  {
+    "ID": "37",
+    "Title": "Carbon Dioxide Gas, 1.5kg Cylinder for MIG Welding - Rent Free - Supplied by Adams Gas",
+    "ImageURL": "/images/products/rent-free-carbon-dioxode-co2-gas-1-5kg.jpg",
+    "ProductCategories": [
+      "MIG Welding Gas"
+    ],
+    "Slug": "rent-free-carbon-dioxode-co2-gas-1-5kg",
+    "categories": [
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Carbon Dioxide Gas",
+      "Cylinder Size": "5kg"
+    }
+  },
+  {
+    "ID": "38",
+    "Title": "Oxygen-Free Nitrogen Gas (OFN), 2L 200Bar Cylinder - Rent Free - Supplied by Adams Gas",
+    "ImageURL": "/images/products/porta-gas-rent-free-oxygen-freeofn-nitrogen-2l-200bar-refill-only.jpg",
+    "ProductCategories": [
+      "MIG Welding Gas"
+    ],
+    "Slug": "porta-gas-rent-free-oxygen-freeofn-nitrogen-2l-200bar-refill-only",
+    "categories": [
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Oxygen-Free Nitrogen Gas (OFN)",
+      "Cylinder Size": "2L"
+    }
+  },
+  {
+    "ID": "39",
+    "Title": "Oxygen Gas, 2L Cylinder for Heating, Cutting, Brazing, and Lead Welding - Supplied by Adams Gas",
+    "ImageURL": "/images/products/oxygen-gas-bottle-2l-for-heating-cutting-brazing-and-lead-welding-supplied-by-adams-gas.jpg",
+    "ProductCategories": [
+      "Oxy Fuel Gas"
+    ],
+    "Slug": "oxygen-gas-bottle-2l-for-heating-cutting-brazing-and-lead-welding-supplied-by-adams-gas",
+    "categories": [
+      "Oxy Fuel Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Oxygen Gas",
+      "Cylinder Size": "2L"
+    }
+  },
+  {
+    "ID": "40",
+    "Title": "Pure Argon Gas, 2L Cylinder for MIG and TIG Welding - Supplied by Adams Gas",
+    "ImageURL": "/images/products/pure-argon-gas-bottle-2l-for-mig-and-tig-welding-supplied-by-adams-gas.jpg",
+    "ProductCategories": [
+      "TIG Welding Gas",
+      "MIG Welding Gas"
+    ],
+    "Slug": "pure-argon-gas-bottle-2l-for-mig-and-tig-welding-supplied-by-adams-gas",
+    "categories": [
+      "TIG Welding Gas",
+      "MIG Welding Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Pure Argon Gas",
+      "Cylinder Size": "2L"
+    }
+  },
+  {
+    "ID": "41",
+    "Title": "Helium Gas, 20L Refillable Cylinder with Filling Adapter for Large Parties - Supplied by Adams Gas",
+    "ImageURL": "/images/products/20l-refillable-helium-gas-cylinder-including-filling-adaptor-hire.jpg",
+    "ProductCategories": [
+      "Helium Canisters>Helium for Party Balloons"
+    ],
+    "Slug": "20l-refillable-helium-gas-cylinder-including-filling-adaptor-hire",
+    "categories": [
+      "Helium Canisters>Helium for Party Balloons"
+    ],
+    "specifications": {
+      "Gas Type": "Helium Gas",
+      "Cylinder Size": "20L"
+    }
+  },
+  {
+    "ID": "42",
+    "Title": "Helium Gas, 20L Refillable Cylinder for Trade Use - Supplied by Adams Gas",
+    "ImageURL": "/images/products/20l-refillable-helium-gas-cylinder-trade-only.jpg",
+    "ProductCategories": [
+      "Helium Canisters>Refillable Helium Bottles, For Trade Customers"
+    ],
+    "Slug": "20l-refillable-helium-gas-cylinder-trade-only",
+    "categories": [
+      "Helium Canisters>Refillable Helium Bottles, For Trade Customers"
+    ],
+    "specifications": {
+      "Gas Type": "Helium Gas",
+      "Cylinder Size": "20L"
+    }
+  },
+  {
+    "ID": "43",
+    "Title": "Helium Gas, 2L Refillable Cylinder for Trade and Parties - Supplied by Adams Gas",
+    "ImageURL": "/images/products/small-2l-refillable-helium-gas-cylinder.jpg",
+    "ProductCategories": [
+      "Helium Canisters>Refillable Helium Bottles, For Trade Customers",
+      "Helium Canisters>Helium for Party Balloons"
+    ],
+    "Slug": "small-2l-refillable-helium-gas-cylinder",
+    "categories": [
+      "Helium Canisters>Refillable Helium Bottles, For Trade Customers",
+      "Helium Canisters>Helium for Party Balloons"
+    ],
+    "specifications": {
+      "Gas Type": "Helium Gas",
+      "Cylinder Size": "2L"
+    }
+  },
+  {
+    "ID": "44",
+    "Title": "Helium Gas, 50L Refillable Cylinder for Trade Use - Supplied by Adams Gas",
+    "ImageURL": "/images/products/9-4l-refillable-helium-gas-cylinder-without-filling-adapter.jpg",
+    "ProductCategories": [
+      "Helium Canisters>Refillable Helium Bottles, For Trade Customers"
+    ],
+    "Slug": "9-4l-refillable-helium-gas-cylinder-without-filling-adapter",
+    "categories": [
+      "Helium Canisters>Refillable Helium Bottles, For Trade Customers"
+    ],
+    "specifications": {
+      "Gas Type": "Helium Gas",
+      "Cylinder Size": "50L"
+    }
+  },
+  {
+    "ID": "47",
+    "Title": "Propane Gas, 12kg Cylinder for Forklift Autogas - Supplied by Calor Gas",
+    "ImageURL": "/images/products/calor-gas-propane-12kg-autogas-refill.jpg",
+    "ProductCategories": [
+      "Calor Gas>Forklift and Auto Gas"
+    ],
+    "Slug": "calor-gas-propane-12kg-autogas-refill",
+    "categories": [
+      "Calor Gas>Forklift and Auto Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Propane Gas",
+      "Cylinder Size": "12kg"
+    }
+  },
+  {
+    "ID": "48",
+    "Title": "Propane Gas, 18kg Cylinder for Forklift Autogas - Supplied by Calor Gas",
+    "ImageURL": "/images/products/calor-gas-propane-18kg-autogas-refill.jpg",
+    "ProductCategories": [
+      "Calor Gas>Forklift and Auto Gas"
+    ],
+    "Slug": "calor-gas-propane-18kg-autogas-refill",
+    "categories": [
+      "Calor Gas>Forklift and Auto Gas"
+    ],
+    "specifications": {
+      "Gas Type": "Propane Gas",
+      "Cylinder Size": "18kg"
+    }
+  },
+  {
+    "ID": "50",
+    "Title": "Butane Gas, Campingaz 907 Cylinder - Supplied by Campingaz",
+    "ImageURL": "/images/products/camping-gaz-907-refill.jpg",
+    "ProductCategories": [
+      "Calor Gas>Camping Gas Bottles"
+    ],
+    "Slug": "camping-gaz-907-refill",
+    "categories": [
+      "Calor Gas>Camping Gas Bottles"
+    ],
+    "specifications": {
+      "Gas Type": "Butane Gas",
+      "Cylinder Size": ""
+    }
+  },
+  {
+    "ID": "51",
+    "Title": "Propane Gas, 13kg Cylinder - Supplied by Calor Gas",
+    "ImageURL": "/images/products/calor-gas-propane-13kg-refill.jpg",
+    "ProductCategories": [
+      "Calor Gas>Propane Gas Bottles"
+    ],
+    "Slug": "calor-gas-propane-13kg-refill",
+    "categories": [
+      "Calor Gas>Propane Gas Bottles"
+    ],
+    "specifications": {
+      "Gas Type": "Propane Gas",
+      "Cylinder Size": "13kg"
+    }
+  },
+  {
+    "ID": "52",
+    "Title": "Propane Gas, 19kg Cylinder - Supplied by Calor Gas",
+    "ImageURL": "/images/products/calor-gas-propane-19kg.jpg",
+    "ProductCategories": [
+      "Calor Gas>Propane Gas Bottles"
+    ],
+    "Slug": "calor-gas-propane-19kg",
+    "categories": [
+      "Calor Gas>Propane Gas Bottles"
+    ],
+    "specifications": {
+      "Gas Type": "Propane Gas",
+      "Cylinder Size": "19kg"
+    }
+  },
+  {
+    "ID": "53",
+    "Title": "Propane Gas, 47kg Cylinder - Supplied by Calor Gas",
+    "ImageURL": "/images/products/calor-gas-propane-47kg-refill.jpg",
+    "ProductCategories": [
+      "Calor Gas>Propane Gas Bottles"
+    ],
+    "Slug": "calor-gas-propane-47kg-refill",
+    "categories": [
+      "Calor Gas>Propane Gas Bottles"
+    ],
+    "specifications": {
+      "Gas Type": "Propane Gas",
+      "Cylinder Size": "47kg"
+    }
+  },
+  {
+    "ID": "54",
+    "Title": "Propane Gas, 6kg Cylinder - Supplied by Calor Gas",
+    "ImageURL": "/images/products/calor-gas-propane-6kg-refill.jpg",
+    "ProductCategories": [
+      "Calor Gas>Propane Gas Bottles"
+    ],
+    "Slug": "calor-gas-propane-6kg-refill",
+    "categories": [
+      "Calor Gas>Propane Gas Bottles"
+    ],
+    "specifications": {
+      "Gas Type": "Propane Gas",
+      "Cylinder Size": "6kg"
+    }
+  },
+  {
+    "ID": "55",
+    "Title": "Butane Gas, 15kg Cylinder - Supplied by Calor Gas",
+    "ImageURL": "/images/products/calor-gas-butane-15kg-refill.jpg",
+    "ProductCategories": [
+      "Calor Gas>Butane Gas Bottles"
+    ],
+    "Slug": "calor-gas-butane-15kg-refill",
+    "categories": [
+      "Calor Gas>Butane Gas Bottles"
+    ],
+    "specifications": {
+      "Gas Type": "Butane Gas",
+      "Cylinder Size": "15kg"
+    }
+  }
+]

@@ -9,8 +9,9 @@ interface MaterialCardProps {
 
 export default function MaterialCard({ material }: MaterialCardProps) {
   return (
-    <Link href={`/materials/${material.id}`}>
-      <div className="bg-[#1A1A1A] rounded-lg p-6 hover:bg-[#2A2A2A] transition-colors">
+    <Link href={`/materials-guide/${material.id}`}>
+      <div className="p-6 bg-[#1A1A1A] rounded-lg border border-[#FF8C42]/20 
+                    hover:border-[#FF8C42]/40 transition-colors">
         <h2 className="text-xl font-[350] text-[#FF8C42] mb-3">{material.name}</h2>
         <p className="text-[#E5E5E5] mb-4">{material.overview}</p>
         

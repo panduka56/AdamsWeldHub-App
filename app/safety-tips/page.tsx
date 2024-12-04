@@ -3,13 +3,23 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, ChevronRight, Search } from 'lucide-react'
+import { ArrowLeft, ChevronRight, Search, Shield, AlertTriangle, Users, Wrench } from 'lucide-react'
 import { Card, CardContent } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { safetyTips, categories, type SafetyTip } from '@/app/data/safetyTips'
 import { Input } from "@/components/ui/input"
 
 const MotionCard = motion(Card) as typeof motion.div
+
+function getIconForCategory(category: string) {
+  const icons = {
+    'Personal Protection': Shield,
+    'Equipment Safety': Wrench,
+    'Workspace Management': Users,
+    'default': AlertTriangle
+  }
+  return icons[category as keyof typeof icons] || icons.default
+}
 
 export default function SafetyTipsPage() {
   const [selectedTip, setSelectedTip] = useState<SafetyTip | null>(null)
@@ -23,6 +33,11 @@ export default function SafetyTipsPage() {
     const matchesCategory = !selectedCategory || tip.category === selectedCategory
     return matchesSearch && matchesCategory
   })
+
+  const tips = filteredTips.map(tip => ({
+    ...tip,
+    icon: getIconForCategory(tip.category)
+  }))
 
   return (
     <motion.div 
@@ -83,7 +98,7 @@ export default function SafetyTipsPage() {
             </div>
             <ScrollArea className="h-[calc(100vh-200px)]">
               <AnimatePresence>
-                {filteredTips.map((tip) => (
+                {tips.map((tip) => (
                   <MotionCard
                     key={tip.id}
                     initial={{ opacity: 0, y: 20 }}

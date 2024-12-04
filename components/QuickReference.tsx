@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Download, Search, Eye } from 'lucide-react'
 import { Outfit } from 'next/font/google'
+import Image from 'next/image'
 
 const outfit = Outfit({ subsets: ['latin'] })
 
@@ -86,9 +87,11 @@ export default function QuickReference() {
           >
             {/* Preview Image */}
             <div className="relative h-48 bg-[#1A1A1A]">
-              <img
+              <Image
                 src={sheet.preview}
                 alt={sheet.title}
+                width={192}
+                height={192}
                 className="w-full h-full object-cover opacity-80"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1A1A1A] to-transparent" />
@@ -173,9 +176,11 @@ export default function QuickReference() {
               </div>
             </div>
             <div className="p-6">
-              <img
+              <Image
                 src={selectedSheet.preview}
                 alt={selectedSheet.title}
+                width={192}
+                height={192}
                 className="w-full rounded-lg"
               />
             </div>

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Sun, Moon, Calculator, BookOpen, Wrench, AlertTriangle, Gauge, Bookmark, Package, Scale, ShoppingCart, ChevronDown, X, Menu, Info, Percent } from 'lucide-react'
+import { Calculator, Settings, FileText, AlertTriangle, Shield, LineChart, BookText, Package, Percent, ShoppingCart, Mail, Sun, Moon, Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   DropdownMenu,
@@ -16,91 +16,69 @@ import {
 interface NavItem {
   name: string
   href: string
-  icon: any
+  icon?: React.ComponentType<{ className?: string }>
   description?: string
 }
 
-const toolsItems: NavItem[] = [
-  {
-    name: 'Gas Calculator',
-    href: '/calculator',
+// Tools menu items
+const toolsNavigation: NavItem[] = [
+  { 
+    name: 'Gas Calculator', 
+    href: '/',
     icon: Calculator,
     description: 'Calculate gas requirements and costs'
   },
-  {
-    name: 'Materials Guide',
+  { 
+    name: 'Materials Guide', 
     href: '/materials-guide',
-    icon: BookOpen,
-    description: 'Comprehensive welding materials guide'
+    icon: FileText,
+    description: 'Comprehensive material properties and compatibility'
   },
-  {
-    name: 'Troubleshooting',
+  { 
+    name: 'Troubleshooting', 
     href: '/troubleshooting',
-    icon: Wrench,
-    description: 'Common issues and solutions'
-  },
-  {
-    name: 'Safety Tips',
-    href: '/safety-tips',
     icon: AlertTriangle,
+    description: 'Solutions for common welding issues'
+  },
+  { 
+    name: 'Safety Tips', 
+    href: '/safety-tips',
+    icon: Shield,
     description: 'Essential safety guidelines'
   },
-  {
-    name: 'Gas Flow Cheat Sheet',
+  { 
+    name: 'Gas Flow Chart', 
     href: '/gas-flow-chart',
-    icon: Gauge,
-    description: 'Quick reference for optimal settings'
+    icon: LineChart,
+    description: 'Quick reference for gas flow settings'
   },
-  {
-    name: 'Notes & Bookmarks',
+  { 
+    name: 'Notes', 
     href: '/notes',
-    icon: Bookmark,
-    description: 'Save important calculations and notes'
-  },
-  {
-    name: 'Bulk Savings',
-    href: '/bulk-savings',
-    icon: Calculator,
-    description: 'Calculate bulk purchase savings'
-  },
-  {
-    name: 'Calculate Discounts',
-    href: '/calculate-discounts',
-    icon: Percent,
-    description: 'Bulk order discount calculator'
-  },
-  {
-    name: 'Quick Order',
-    href: '/quick-order',
-    icon: ShoppingCart,
-    description: 'Place orders quickly'
-  },
+    icon: BookText,
+    description: 'Save calculations and important information'
+  }
 ]
 
-const productItems: NavItem[] = [
-  {
-    name: 'Products',
+// Products menu items
+const productNavigation: NavItem[] = [
+  { 
+    name: 'All Products', 
     href: '/products',
     icon: Package,
-    description: 'Browse the complete product range'
+    description: 'Browse our complete product range'
   },
-  {
-    name: 'Bulk Savings',
-    href: '/bulk-savings',
-    icon: Scale,
-    description: 'Volume discounts and offers'
+  { 
+    name: 'Bulk Savings', 
+    href: '/products/bulk-savings',
+    icon: Percent,
+    description: 'Calculate volume discounts'
   },
-  {
-    name: 'Calculate Bulk Discounts',
-    href: '/bulk-calculator',
-    icon: Calculator,
-    description: 'Calculate savings for bulk orders'
-  },
-  {
-    name: 'Quick Order',
-    href: '/quick-order',
+  { 
+    name: 'Quick Order', 
+    href: '/products/quick-order',
     icon: ShoppingCart,
-    description: 'Fast ordering for regular customers'
+    description: 'Fast reordering for regular customers'
   }
 ]
 
@@ -111,7 +89,8 @@ export default function Header() {
 
   useEffect(() => {
     setMounted(true)
-  }, [])
+    setTheme('dark')
+  }, [setTheme])
 
   if (!mounted) {
     return null
@@ -132,18 +111,20 @@ export default function Header() {
                                               text-gray-600 dark:text-gray-300 hover:text-gray-900 
                                               dark:hover:text-white">
                   <span>Tools</span>
-                  <ChevronDown className="w-4 h-4" />
+                  <Settings className="w-4 h-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-64">
-                  {toolsItems.map((item) => (
+                  {toolsNavigation.map((item) => (
                     <DropdownMenuItem key={item.name} className="p-2">
                       <Link href={item.href} className="flex items-start space-x-3 w-full">
-                        <item.icon className="w-5 h-5 mt-0.5 text-[#FF8C42]" />
+                        {item.icon && <item.icon className="w-5 h-5 mt-0.5 text-[#FF8C42]" />}
                         <div>
                           <div className="font-medium">{item.name}</div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
-                            {item.description}
-                          </p>
+                          {item.description && (
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                              {item.description}
+                            </p>
+                          )}
                         </div>
                       </Link>
                     </DropdownMenuItem>
@@ -157,18 +138,20 @@ export default function Header() {
                                               text-gray-600 dark:text-gray-300 hover:text-gray-900 
                                               dark:hover:text-white">
                   <span>Products</span>
-                  <ChevronDown className="w-4 h-4" />
+                  <Settings className="w-4 h-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-64">
-                  {productItems.map((item) => (
+                  {productNavigation.map((item) => (
                     <DropdownMenuItem key={item.name} className="p-2">
                       <Link href={item.href} className="flex items-start space-x-3 w-full">
-                        <item.icon className="w-5 h-5 mt-0.5 text-[#FF8C42]" />
+                        {item.icon && <item.icon className="w-5 h-5 mt-0.5 text-[#FF8C42]" />}
                         <div>
                           <div className="font-medium">{item.name}</div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
-                            {item.description}
-                          </p>
+                          {item.description && (
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                              {item.description}
+                            </p>
+                          )}
                         </div>
                       </Link>
                     </DropdownMenuItem>
@@ -197,22 +180,18 @@ export default function Header() {
               </Link>
             </div>
 
-            {/* Right Side - Direct Links & Actions */}
-            <div className="flex-1 hidden md:flex items-center justify-end space-x-6">
-              <Link 
-                href="/materials-guide"
-                className="text-sm font-medium text-gray-600 dark:text-gray-300 
-                         hover:text-gray-900 dark:hover:text-white"
+            {/* Right Side - Contact, Theme Toggle & Mobile Menu */}
+            <div className="flex-1 flex items-center justify-end space-x-6">
+              <Link
+                href="mailto:sales@adamsgas.co.uk"
+                className="hidden md:flex items-center space-x-2 text-sm font-medium
+                          text-gray-600 dark:text-gray-300 hover:text-gray-900 
+                          dark:hover:text-white"
               >
-                Materials Guide
+                <Mail className="w-5 h-5" />
+                <span>Contact Us</span>
               </Link>
-              <Link 
-                href="/about"
-                className="text-sm font-medium text-gray-600 dark:text-gray-300 
-                         hover:text-gray-900 dark:hover:text-white"
-              >
-                About
-              </Link>
+
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                 className="p-2 rounded-lg bg-gray-100 dark:bg-[#252525] 
@@ -226,22 +205,22 @@ export default function Header() {
                   <Moon className="w-5 h-5 text-gray-600" />
                 )}
               </button>
-            </div>
 
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-lg hover:bg-gray-100 
-                         dark:hover:bg-[#252525] transition-colors duration-200"
-                aria-label="Toggle mobile menu"
-              >
-                {mobileMenuOpen ? (
-                  <X className="w-6 h-6" />
-                ) : (
-                  <Menu className="w-6 h-6" />
-                )}
-              </button>
+              {/* Mobile Menu Button */}
+              <div className="md:hidden">
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="p-2 rounded-lg hover:bg-gray-100 
+                           dark:hover:bg-[#252525] transition-colors duration-200"
+                  aria-label="Toggle mobile menu"
+                >
+                  {mobileMenuOpen ? (
+                    <X className="w-6 h-6" />
+                  ) : (
+                    <Menu className="w-6 h-6" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -263,7 +242,7 @@ export default function Header() {
                       Tools
                     </h3>
                     <div className="space-y-2">
-                      {toolsItems.map((item) => (
+                      {toolsNavigation.map((item) => (
                         <Link
                           key={item.name}
                           href={item.href}
@@ -273,7 +252,7 @@ export default function Header() {
                                    transition-colors duration-200"
                           onClick={() => setMobileMenuOpen(false)}
                         >
-                          <item.icon className="w-5 h-5 text-[#FF8C42]" />
+                          {item.icon && <item.icon className="w-5 h-5 text-[#FF8C42]" />}
                           <span>{item.name}</span>
                         </Link>
                       ))}
@@ -286,7 +265,7 @@ export default function Header() {
                       Products
                     </h3>
                     <div className="space-y-2">
-                      {productItems.map((item) => (
+                      {productNavigation.map((item) => (
                         <Link
                           key={item.name}
                           href={item.href}
@@ -296,37 +275,11 @@ export default function Header() {
                                    transition-colors duration-200"
                           onClick={() => setMobileMenuOpen(false)}
                         >
-                          <item.icon className="w-5 h-5 text-[#FF8C42]" />
+                          {item.icon && <item.icon className="w-5 h-5 text-[#FF8C42]" />}
                           <span>{item.name}</span>
                         </Link>
                       ))}
                     </div>
-                  </div>
-
-                  {/* Direct Links */}
-                  <div className="space-y-2">
-                    <Link
-                      href="/materials-guide"
-                      className="flex items-center space-x-3 p-2 rounded-lg
-                               text-gray-600 dark:text-gray-300
-                               hover:bg-gray-100 dark:hover:bg-[#252525]
-                               transition-colors duration-200"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      <BookOpen className="w-5 h-5 text-[#FF8C42]" />
-                      <span>Materials Guide</span>
-                    </Link>
-                    <Link
-                      href="/about"
-                      className="flex items-center space-x-3 p-2 rounded-lg
-                               text-gray-600 dark:text-gray-300
-                               hover:bg-gray-100 dark:hover:bg-[#252525]
-                               transition-colors duration-200"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      <Info className="w-5 h-5 text-[#FF8C42]" />
-                      <span>About</span>
-                    </Link>
                   </div>
                 </div>
               </div>
