@@ -6,7 +6,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://adamsgas.com'
 
   const productUrls = products.map(product => ({
-    url: `${baseUrl}/products/${product.slug}`,
+    url: `${baseUrl}/products/${product.Slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.8

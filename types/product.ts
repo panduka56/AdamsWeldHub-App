@@ -1,17 +1,18 @@
 export interface Product {
   ID: string;
   Title: string;
+  Slug: string;
+  ProductCategories: string[];
   Content: string;
   ImageURL: string;
-  ProductCategories: string;
-  Slug: string;
-  categories: string[];
-  GasMixPercentage: string;
-  VolumeLiters: string;
-  PressureBar: string;
+  GasMixPercentage?: string;
+  VolumeLiters?: string;
+  PressureBar?: string;
+  RentFree?: boolean;
+  Supplier?: string;
   specifications: {
     'Gas Type': string;
     'Cylinder Size': string;
-    [key: string]: string;
   };
+  categories: string[];
 } 

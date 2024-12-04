@@ -1,15 +1,16 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import type { WeldingProcess } from '@/app/data/gasRecommendations'
 
 interface ProcessSelectionProps {
   options: Array<{
-    id: string;
+    id: WeldingProcess;
     name: string;
     description: string;
   }>;
-  onSelect: (process: string) => void;
-  selected: string;
+  onSelect: (process: WeldingProcess) => void;
+  selected: WeldingProcess;
 }
 
 export default function ProcessSelection({ options, onSelect, selected }: ProcessSelectionProps) {

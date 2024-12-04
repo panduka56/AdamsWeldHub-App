@@ -1,15 +1,16 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import type { MaterialType } from '@/app/data/gasRecommendations'
 
 interface MaterialSelectionProps {
   options: Array<{
-    id: string;
+    id: MaterialType;
     name: string;
     description: string;
   }>;
-  onSelect: (material: string) => void;
-  selected: string;
+  onSelect: (material: MaterialType) => void;
+  selected: MaterialType;
 }
 
 export default function MaterialSelection({ options, onSelect, selected }: MaterialSelectionProps) {

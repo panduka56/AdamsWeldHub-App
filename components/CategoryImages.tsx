@@ -1,4 +1,4 @@
-import { Flame, Wind, Droplet, Box, Cylinder } from 'lucide-react'
+import { Flame, Wind, Droplet, Cylinder } from 'lucide-react'
 
 export const CategoryIcon = ({ category }: { category: string }) => {
   const { Icon, iconColor } = getIconAndColors(category)

@@ -14,7 +14,6 @@ const categories = ['MIG Welding Gas', 'TIG Welding Gas', 'Oxy Fuel Gas', 'Trade
 export default function ProductsList({ initialProducts }: ProductsListProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string>('')
-  const [error, setError] = useState<string | null>(null)
 
   console.log('ProductsList received products:', initialProducts.length)
 
@@ -33,14 +32,6 @@ export default function ProductsList({ initialProducts }: ProductsListProps) {
   })
 
   console.log('Filtered products:', filteredProducts.length)
-
-  if (error) {
-    return (
-      <div className="text-center py-12 text-red-500">
-        Error: {error}
-      </div>
-    )
-  }
 
   if (!initialProducts?.length) {
     return (

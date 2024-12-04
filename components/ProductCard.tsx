@@ -8,7 +8,6 @@ import { Info, ExternalLink } from 'lucide-react'
 import { Product } from '@/types/product'
 import Image from 'next/image'
 import { CategoryDefaultImage, CategoryIcon } from './CategoryImages'
-import { motion } from 'framer-motion'
 
 interface ProductCardProps {
   product: Product;
@@ -17,7 +16,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const [imageError, setImageError] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
-  const mainCategory = product.categories[0]
+  const mainCategory = product.ProductCategories[0]
 
   return (
     <Card 
@@ -77,7 +76,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Categories */}
         <div className="flex flex-wrap gap-2">
-          {product.categories.map((category, index) => (
+          {product.ProductCategories.map((category, index) => (
             <span 
               key={index}
               className="text-xs px-2 py-1 rounded-full bg-[#1A1A1A] 

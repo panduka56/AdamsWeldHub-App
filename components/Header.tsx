@@ -4,12 +4,7 @@ import { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import Image from 'next/image'
-import { 
-  Sun, Moon, Calculator, BookOpen, Wrench, AlertTriangle, 
-  Gauge, Bookmark, ChevronDown, X, Menu, Info, Flame, 
-  Home, ShoppingCart, ShoppingBag, Mail, Package, 
-  FileText, Shield, BarChart3, Beaker 
-} from 'lucide-react'
+import { Calculator, Settings } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   DropdownMenu,
@@ -36,31 +31,31 @@ const toolsNavigation: NavItem[] = [
   { 
     name: 'Materials Guide', 
     href: '/materials-guide',
-    icon: Beaker,
+    icon: Settings,
     description: 'Comprehensive material properties and compatibility'
   },
   { 
     name: 'Troubleshooting', 
     href: '/troubleshooting',
-    icon: Wrench,
+    icon: Settings,
     description: 'Solutions for common welding issues'
   },
   { 
     name: 'Safety Tips', 
     href: '/safety-tips',
-    icon: Shield,
+    icon: Settings,
     description: 'Essential safety guidelines'
   },
   { 
     name: 'Gas Flow Chart', 
     href: '/gas-flow-chart',
-    icon: Gauge,
+    icon: Settings,
     description: 'Quick reference for gas flow settings'
   },
   { 
     name: 'Notes', 
     href: '/notes',
-    icon: FileText,
+    icon: Settings,
     description: 'Save calculations and important information'
   }
 ]
@@ -70,19 +65,19 @@ const productNavigation: NavItem[] = [
   { 
     name: 'All Products', 
     href: '/products',
-    icon: Package,
+    icon: Settings,
     description: 'Browse our complete product range'
   },
   { 
     name: 'Bulk Savings', 
     href: '/products/bulk-savings',
-    icon: BarChart3,
+    icon: Settings,
     description: 'Calculate volume discounts'
   },
   { 
     name: 'Quick Order', 
     href: '/products/quick-order',
-    icon: ShoppingBag,
+    icon: Settings,
     description: 'Fast reordering for regular customers'
   }
 ]
@@ -116,7 +111,7 @@ export default function Header() {
                                               text-gray-600 dark:text-gray-300 hover:text-gray-900 
                                               dark:hover:text-white">
                   <span>Tools</span>
-                  <ChevronDown className="w-4 h-4" />
+                  <Settings className="w-4 h-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-64">
                   {toolsNavigation.map((item) => (
@@ -143,7 +138,7 @@ export default function Header() {
                                               text-gray-600 dark:text-gray-300 hover:text-gray-900 
                                               dark:hover:text-white">
                   <span>Products</span>
-                  <ChevronDown className="w-4 h-4" />
+                  <Settings className="w-4 h-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-64">
                   {productNavigation.map((item) => (
@@ -193,7 +188,7 @@ export default function Header() {
                           text-gray-600 dark:text-gray-300 hover:text-gray-900 
                           dark:hover:text-white"
               >
-                <Mail className="w-5 h-5" />
+                <Settings className="w-5 h-5" />
                 <span>Contact Us</span>
               </Link>
 
@@ -205,9 +200,9 @@ export default function Header() {
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? (
-                  <Sun className="w-5 h-5 text-[#e77402]" />
+                  <Settings className="w-5 h-5 text-[#e77402]" />
                 ) : (
-                  <Moon className="w-5 h-5 text-gray-600" />
+                  <Settings className="w-5 h-5 text-gray-600" />
                 )}
               </button>
 
@@ -220,9 +215,9 @@ export default function Header() {
                   aria-label="Toggle mobile menu"
                 >
                   {mobileMenuOpen ? (
-                    <X className="w-6 h-6" />
+                    <Settings className="w-6 h-6" />
                   ) : (
-                    <Menu className="w-6 h-6" />
+                    <Settings className="w-6 h-6" />
                   )}
                 </button>
               </div>

@@ -5,7 +5,7 @@ import { Product } from '@/types/product'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ExternalLink, Home, ChevronRight, Info, ShoppingCart } from 'lucide-react'
+import { ExternalLink, Home, ChevronRight, ShoppingCart } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { CategoryDefaultImage } from './CategoryImages'
 

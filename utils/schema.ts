@@ -4,11 +4,11 @@ export const generateProductSchema = (product: Product) => {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: product.name,
-    description: product.description,
-    sku: product.id,
-    category: product.categories[0],
-    image: product.imageUrl,
+    name: product.Title,
+    description: product.Content,
+    sku: product.ID,
+    category: product.ProductCategories[0],
+    image: product.ImageURL,
     brand: {
       '@type': 'Brand',
       name: 'AdamsGas'

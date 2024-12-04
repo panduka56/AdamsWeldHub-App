@@ -7,28 +7,27 @@ export async function getProducts(): Promise<Product[]> {
     const filePath = path.join(process.cwd(), 'data', 'Cleaned_Welding_Gas_Products.csv')
     const fileContent = await fs.readFile(filePath, 'utf-8')
     
-    // Parse CSV manually since we know the format
-    const rows = fileContent.split('\n').slice(1) // Skip header
+    const rows = fileContent.split('\n').slice(1)
     
     const products = rows.map(row => {
-      // Split by comma but handle quoted values
       const [ID, Title, ProductCategories, Slug] = row
         .match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g)
         ?.map(str => str.replace(/^"|"$/g, '').trim()) || []
 
-      // Extract gas type and size from title
       const gasMatch = Title?.match(/([\d.]+)L|(\d+)kg/)
       const volumeSize = gasMatch ? gasMatch[0] : ''
       const gasType = Title?.split(',')[0]?.replace('_', '')
+      
+      const categories = ProductCategories?.split('|').map(c => c.trim()) || []
 
       return {
         ID,
         Title: Title?.replace('_', ''),
         Content: `${Title?.replace('_', '')} - Available from Adams Gas. Professional welding supplies and gases.`,
         ImageURL: `/images/products/${Slug}.jpg`,
-        ProductCategories,
+        ProductCategories: categories,
         Slug,
-        categories: ProductCategories?.split('|').map(c => c.trim()) || [],
+        categories,
         GasMixPercentage: gasType,
         VolumeLiters: volumeSize,
         PressureBar: '200',
@@ -44,10 +43,7 @@ export async function getProducts(): Promise<Product[]> {
       product.Slug
     )
 
-    console.log('Total products:', products.length)
-    console.log('Sample product:', products[0])
     return products
-
   } catch (error) {
     console.error('Error in getProducts:', error)
     return []
