@@ -1,19 +1,19 @@
 'use client'
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import ProcessSelection from './ProcessSelection'
 import MaterialSelection from './MaterialSelection'
 import ThicknessInput from './ThicknessInput'
-import GasMixPreferences from './GasMixPreferences'
 import ResultsDisplay from './ResultsDisplay'
-import { Wrench, Beaker, Ruler, TestTubes, CheckCircle } from 'lucide-react'
+import AvailableCylinders from './AvailableCylinders'
+import { Product } from '@/types/product'
+import { Wrench, Beaker, Ruler, CheckCircle } from 'lucide-react'
 
 const steps = [
   { id: 'process', label: 'Process', icon: Wrench },
   { id: 'material', label: 'Material', icon: Beaker },
   { id: 'thickness', label: 'Thickness', icon: Ruler },
-  { id: 'gas', label: 'Gas Mix', icon: TestTubes },
   { id: 'results', label: 'Results', icon: CheckCircle }
 ]
 
@@ -165,7 +165,6 @@ function calculateRecommendations(
   process: string,
   material: string,
   thickness: number,
-  preferences: string[]
 ): string[] {
   const options = gasMixOptions[process]?.[material]
   if (!options) return []
@@ -179,25 +178,29 @@ function calculateRecommendations(
   })
 
   if (!thicknessOption) return []
-
-  // If no preferences, return all gases
-  if (!preferences.length) return thicknessOption.gases
-
-  // Filter gases based on preferences
-  return thicknessOption.gases.filter(gas => 
-    preferences.some(pref => 
-      gas.toLowerCase().includes(pref.toLowerCase())
-    )
-  )
+  return thicknessOption.gases
 }
 
-function WeldingGasCalculator() {
+export default function WeldingGasCalculator() {
   const [currentStep, setCurrentStep] = useState(0)
   const [selectedProcess, setSelectedProcess] = useState('')
   const [selectedMaterial, setSelectedMaterial] = useState('')
   const [thickness, setThickness] = useState(0)
-  const [gasMixPreferences, setGasMixPreferences] = useState<string[]>([])
   const [recommendedGases, setRecommendedGases] = useState<string[]>([])
+  const [products, setProducts] = useState<Product[]>([])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products')
+        const data = await response.json()
+        setProducts(data)
+      } catch (error) {
+        console.error('Failed to fetch products:', error)
+      }
+    }
+    fetchProducts()
+  }, [])
 
   const nextStep = () => {
     if (currentStep === steps.length - 1) return
@@ -206,7 +209,6 @@ function WeldingGasCalculator() {
         selectedProcess,
         selectedMaterial,
         thickness,
-        gasMixPreferences
       )
       setRecommendedGases(gases)
     }
@@ -220,7 +222,6 @@ function WeldingGasCalculator() {
       selectedProcess,
       selectedMaterial,
       thickness,
-      gasMixPreferences
     )
     setRecommendedGases(gases)
     nextStep()
@@ -235,18 +236,10 @@ function WeldingGasCalculator() {
       case 2:
         return <ThicknessInput onChange={setThickness} value={thickness} />
       case 3:
-        return <GasMixPreferences 
-          onChange={setGasMixPreferences} 
-          selected={gasMixPreferences}
-          process={selectedProcess}
-          material={selectedMaterial}
-        />
-      case 4:
         return <ResultsDisplay
           process={selectedProcess}
           material={selectedMaterial}
           thickness={thickness}
-          gasMixPreferences={gasMixPreferences}
           recommendedGases={recommendedGases}
         />
       default:
@@ -256,81 +249,108 @@ function WeldingGasCalculator() {
 
   return (
     <div className="space-y-12">
-      {/* Content Area with Progress Steps Inside */}
-      <div className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-gray-200 
-                    dark:border-[#FF8C42]/20 p-8 mx-auto max-w-3xl shadow-lg">
-        {/* Progress Steps - Now Inside Card */}
-        <div className="flex items-center justify-between mb-8">
-          {steps.map((step, index) => (
-            <div key={step.id} className="flex flex-col items-center">
-              <motion.button
-                onClick={() => setCurrentStep(index)}
-                className="relative group"
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <div className={`
-                  w-10 h-10 rounded-lg flex items-center justify-center
-                  transition-all duration-200 border-2
-                  ${index <= currentStep 
-                    ? 'bg-[#FF8C42]/10 border-[#FF8C42] text-[#FF8C42] dark:bg-[#FF8C42]/10 dark:border-[#FF8C42] dark:text-[#FF8C42]' 
-                    : 'bg-gray-200 border-gray-300 text-gray-500 dark:bg-[#222222]/80 dark:border-[#333333] dark:text-[#888888] hover:bg-gray-100 dark:hover:bg-[#222222]'
-                  }
-                `}>
-                  <step.icon className="w-5 h-5" />
-                </div>
-                <span className={`
-                  absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap
-                  text-xs transition-colors duration-200 font-medium
-                  ${index === currentStep 
-                    ? 'text-[#FF8C42] dark:text-[#FF8C42]' 
-                    : 'text-gray-600 group-hover:text-gray-800 dark:text-[#888888] dark:group-hover:text-[#E5E5E5]'
-                  }
-                `}>
-                  {step.label}
-                </span>
-              </motion.button>
-            </div>
-          ))}
-        </div>
+      <div 
+        className={`grid transition-all duration-300 ${
+          currentStep === 3 
+            ? 'md:grid-cols-2 gap-8' 
+            : 'grid-cols-1 max-w-3xl mx-auto'
+        }`}
+      >
+        {/* Calculator Column */}
+        <motion.div
+          layout
+          className="bg-white dark:bg-[#1E1E1E] rounded-xl border border-gray-200 
+                    dark:border-[#FF8C42]/20 p-8 shadow-lg"
+        >
+          {/* Progress Steps */}
+          <div className="flex items-center justify-between mb-8">
+            {steps.map((step, index) => (
+              <div key={step.id} className="flex flex-col items-center">
+                <motion.button
+                  onClick={() => setCurrentStep(index)}
+                  className="relative group"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <div className={`
+                    w-10 h-10 rounded-lg flex items-center justify-center
+                    transition-all duration-200 border-2
+                    ${index <= currentStep 
+                      ? 'bg-[#FF8C42]/10 border-[#FF8C42] text-[#FF8C42] dark:bg-[#FF8C42]/10 dark:border-[#FF8C42] dark:text-[#FF8C42]' 
+                      : 'bg-gray-200 border-gray-300 text-gray-500 dark:bg-[#222222]/80 dark:border-[#333333] dark:text-[#888888] hover:bg-gray-100 dark:hover:bg-[#222222]'
+                    }
+                  `}>
+                    <step.icon className="w-5 h-5" />
+                  </div>
+                  <span className={`
+                    absolute top-full mt-2 left-1/2 -translate-x-1/2 whitespace-nowrap
+                    text-xs transition-colors duration-200 font-medium
+                    ${index === currentStep 
+                      ? 'text-[#FF8C42] dark:text-[#FF8C42]' 
+                      : 'text-gray-600 group-hover:text-gray-800 dark:text-[#888888] dark:group-hover:text-[#E5E5E5]'
+                    }
+                  `}>
+                    {step.label}
+                  </span>
+                </motion.button>
+              </div>
+            ))}
+          </div>
 
-        {/* Content */}
-        <div className="mt-12">
-          <motion.div
-            key={currentStep}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {renderStep()}
-          </motion.div>
-        </div>
+          {/* Content */}
+          <div className="mt-12">
+            <motion.div
+              key={currentStep}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              {renderStep()}
+            </motion.div>
+          </div>
 
-        {/* Navigation */}
-        <div className="flex justify-between mt-8 pt-6 border-t border-gray-200 dark:border-[#FF8C42]/20">
-          <button
-            onClick={prevStep}
-            disabled={currentStep === 0}
-            className="px-6 py-2 rounded-lg border transition-colors
-                     border-[#FF8C42]/20 text-[#FF8C42] hover:bg-[#FF8C42]/10 
-                     disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
-          >
-            Previous
-          </button>
-          <button
-            onClick={currentStep === steps.length - 2 ? handleCalculate : nextStep}
-            disabled={currentStep === steps.length - 1}
-            className="px-6 py-2 rounded-lg transition-colors
-                     bg-[#FF8C42] text-white hover:bg-[#FF8C42]/90 
-                     disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {currentStep === steps.length - 2 ? 'Calculate' : 'Next'}
-          </button>
-        </div>
+          {/* Navigation */}
+          <div className="flex justify-between mt-8 pt-6 border-t border-gray-200 dark:border-[#FF8C42]/20">
+            <button
+              onClick={prevStep}
+              disabled={currentStep === 0}
+              className="px-6 py-2 rounded-lg border transition-colors
+                       border-[#FF8C42]/20 text-[#FF8C42] hover:bg-[#FF8C42]/10 
+                       disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
+            >
+              Previous
+            </button>
+            <button
+              onClick={currentStep === steps.length - 2 ? handleCalculate : nextStep}
+              disabled={currentStep === steps.length - 1}
+              className="px-6 py-2 rounded-lg transition-colors
+                       bg-[#FF8C42] text-white hover:bg-[#FF8C42]/90 
+                       disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {currentStep === steps.length - 2 ? 'Calculate' : 'Next'}
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Available Cylinders Column */}
+        <AnimatePresence>
+          {currentStep === 3 && (
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <AvailableCylinders
+                recommendedGas={recommendedGases[0]}
+                process={selectedProcess}
+                products={products}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   )
 }
-
-export default WeldingGasCalculator

@@ -1,20 +1,13 @@
-import { Metadata } from 'next'
 import { getAllProducts } from '@/utils/products'
 import ProductsList from '@/components/ProductsList'
 
-export const metadata: Metadata = {
-  title: 'Welding Gases & Supplies | AdamsGas',
-  description: 'Professional welding gases including MIG, TIG, and Oxy-Fuel. Browse our selection of high-quality welding supplies.',
-  openGraph: {
-    title: 'Welding Gases & Supplies',
-    description: 'Professional welding gases and supplies',
-  }
-}
-
 export default async function ProductsPage() {
   const products = await getAllProducts()
-  
-  return <ProductsList initialProducts={products} />
-}
 
-export const dynamic = 'force-static' 
+  return (
+    <div className="container mx-auto px-6 py-12">
+      <h1 className="text-3xl font-[350] mb-8">Products</h1>
+      <ProductsList initialProducts={products} />
+    </div>
+  )
+} 

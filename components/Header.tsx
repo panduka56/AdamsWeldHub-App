@@ -4,7 +4,12 @@ import { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Sun, Moon, Calculator, BookOpen, Wrench, AlertTriangle, Gauge, Bookmark, ChevronDown, X, Menu, Info, Flame } from 'lucide-react'
+import { 
+  Sun, Moon, Calculator, BookOpen, Wrench, AlertTriangle, 
+  Gauge, Bookmark, ChevronDown, X, Menu, Info, Flame, 
+  Home, ShoppingCart, ShoppingBag, Mail, Package, 
+  FileText, Shield, BarChart3, Beaker 
+} from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   DropdownMenu,
@@ -16,67 +21,87 @@ import {
 interface NavItem {
   name: string
   href: string
-  icon: React.ComponentType<{ className?: string }>
+  icon?: React.ComponentType<{ className?: string }>
   description?: string
 }
 
-const toolsItems: NavItem[] = [
-  {
-    name: 'Gas Calculator',
-    href: '/calculator',
+// Tools menu items
+const toolsNavigation: NavItem[] = [
+  { 
+    name: 'Gas Calculator', 
+    href: '/',
     icon: Calculator,
     description: 'Calculate gas requirements and costs'
   },
-  {
-    name: 'Materials Guide',
+  { 
+    name: 'Materials Guide', 
     href: '/materials-guide',
-    icon: BookOpen,
-    description: 'Comprehensive welding materials guide'
+    icon: Beaker,
+    description: 'Comprehensive material properties and compatibility'
   },
-  {
-    name: 'Troubleshooting',
+  { 
+    name: 'Troubleshooting', 
     href: '/troubleshooting',
     icon: Wrench,
-    description: 'Common issues and solutions'
+    description: 'Solutions for common welding issues'
   },
-  {
-    name: 'Safety Tips',
+  { 
+    name: 'Safety Tips', 
     href: '/safety-tips',
-    icon: AlertTriangle,
+    icon: Shield,
     description: 'Essential safety guidelines'
   },
-  {
-    name: 'Gas Flow Chart',
+  { 
+    name: 'Gas Flow Chart', 
     href: '/gas-flow-chart',
     icon: Gauge,
-    description: 'Quick reference for optimal settings'
+    description: 'Quick reference for gas flow settings'
   },
-  {
-    name: 'Notes & Bookmarks',
+  { 
+    name: 'Notes', 
     href: '/notes',
-    icon: Bookmark,
-    description: 'Save important calculations and notes'
+    icon: FileText,
+    description: 'Save calculations and important information'
   }
 ]
 
-const productItems: NavItem[] = [
-  {
-    name: 'MIG Welding Gas',
+// Products menu items
+const productNavigation: NavItem[] = [
+  { 
+    name: 'All Products', 
+    href: '/products',
+    icon: Package,
+    description: 'Browse our complete product range'
+  },
+  { 
+    name: 'Bulk Savings', 
+    href: '/tools/bulk-savings',
+    icon: BarChart3,
+    description: 'Calculate volume discounts'
+  },
+  { 
+    name: 'Quick Order', 
+    href: '/products/quick-order',
+    icon: ShoppingBag,
+    description: 'Fast reordering for regular customers'
+  },
+  { 
+    name: 'MIG Welding Gas', 
     href: '/products?category=mig',
     icon: Flame,
-    description: 'High-quality MIG welding gas mixtures'
+    description: 'MIG welding gas solutions'
   },
-  {
-    name: 'TIG Welding Gas',
+  { 
+    name: 'TIG Welding Gas', 
     href: '/products?category=tig',
     icon: Flame,
-    description: 'Premium TIG welding gas solutions'
+    description: 'TIG welding gas solutions'
   },
-  {
-    name: 'Oxy-Fuel Gas',
+  { 
+    name: 'Oxy Fuel Gas', 
     href: '/products?category=oxy-fuel',
     icon: Flame,
-    description: 'Professional oxy-fuel gas combinations'
+    description: 'Oxy-fuel gas solutions'
   }
 ]
 
@@ -111,15 +136,17 @@ export default function Header() {
                   <ChevronDown className="w-4 h-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-64">
-                  {toolsItems.map((item) => (
+                  {toolsNavigation.map((item) => (
                     <DropdownMenuItem key={item.name} className="p-2">
                       <Link href={item.href} className="flex items-start space-x-3 w-full">
-                        <item.icon className="w-5 h-5 mt-0.5 text-[#FF8C42]" />
+                        {item.icon && <item.icon className="w-5 h-5 mt-0.5 text-[#FF8C42]" />}
                         <div>
                           <div className="font-medium">{item.name}</div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
-                            {item.description}
-                          </p>
+                          {item.description && (
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                              {item.description}
+                            </p>
+                          )}
                         </div>
                       </Link>
                     </DropdownMenuItem>
@@ -136,15 +163,17 @@ export default function Header() {
                   <ChevronDown className="w-4 h-4" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="w-64">
-                  {productItems.map((item) => (
+                  {productNavigation.map((item) => (
                     <DropdownMenuItem key={item.name} className="p-2">
                       <Link href={item.href} className="flex items-start space-x-3 w-full">
-                        <item.icon className="w-5 h-5 mt-0.5 text-[#FF8C42]" />
+                        {item.icon && <item.icon className="w-5 h-5 mt-0.5 text-[#FF8C42]" />}
                         <div>
                           <div className="font-medium">{item.name}</div>
-                          <p className="text-xs text-gray-500 dark:text-gray-400">
-                            {item.description}
-                          </p>
+                          {item.description && (
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
+                              {item.description}
+                            </p>
+                          )}
                         </div>
                       </Link>
                     </DropdownMenuItem>
@@ -173,22 +202,8 @@ export default function Header() {
               </Link>
             </div>
 
-            {/* Right Side - Direct Links & Actions */}
-            <div className="flex-1 hidden md:flex items-center justify-end space-x-6">
-              <Link 
-                href="/materials-guide"
-                className="text-sm font-medium text-gray-600 dark:text-gray-300 
-                         hover:text-gray-900 dark:hover:text-white"
-              >
-                Materials Guide
-              </Link>
-              <Link 
-                href="/about"
-                className="text-sm font-medium text-gray-600 dark:text-gray-300 
-                         hover:text-gray-900 dark:hover:text-white"
-              >
-                About
-              </Link>
+            {/* Right Side - Theme Toggle & Mobile Menu */}
+            <div className="flex-1 flex items-center justify-end space-x-6">
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                 className="p-2 rounded-lg bg-gray-100 dark:bg-[#252525] 
@@ -202,22 +217,22 @@ export default function Header() {
                   <Moon className="w-5 h-5 text-gray-600" />
                 )}
               </button>
-            </div>
 
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-lg hover:bg-gray-100 
-                         dark:hover:bg-[#252525] transition-colors duration-200"
-                aria-label="Toggle mobile menu"
-              >
-                {mobileMenuOpen ? (
-                  <X className="w-6 h-6" />
-                ) : (
-                  <Menu className="w-6 h-6" />
-                )}
-              </button>
+              {/* Mobile Menu Button */}
+              <div className="md:hidden">
+                <button
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="p-2 rounded-lg hover:bg-gray-100 
+                           dark:hover:bg-[#252525] transition-colors duration-200"
+                  aria-label="Toggle mobile menu"
+                >
+                  {mobileMenuOpen ? (
+                    <X className="w-6 h-6" />
+                  ) : (
+                    <Menu className="w-6 h-6" />
+                  )}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -239,7 +254,7 @@ export default function Header() {
                       Tools
                     </h3>
                     <div className="space-y-2">
-                      {toolsItems.map((item) => (
+                      {toolsNavigation.map((item) => (
                         <Link
                           key={item.name}
                           href={item.href}
@@ -249,7 +264,7 @@ export default function Header() {
                                    transition-colors duration-200"
                           onClick={() => setMobileMenuOpen(false)}
                         >
-                          <item.icon className="w-5 h-5 text-[#FF8C42]" />
+                          {item.icon && <item.icon className="w-5 h-5 text-[#FF8C42]" />}
                           <span>{item.name}</span>
                         </Link>
                       ))}
@@ -262,7 +277,7 @@ export default function Header() {
                       Products
                     </h3>
                     <div className="space-y-2">
-                      {productItems.map((item) => (
+                      {productNavigation.map((item) => (
                         <Link
                           key={item.name}
                           href={item.href}
@@ -272,37 +287,11 @@ export default function Header() {
                                    transition-colors duration-200"
                           onClick={() => setMobileMenuOpen(false)}
                         >
-                          <item.icon className="w-5 h-5 text-[#FF8C42]" />
+                          {item.icon && <item.icon className="w-5 h-5 text-[#FF8C42]" />}
                           <span>{item.name}</span>
                         </Link>
                       ))}
                     </div>
-                  </div>
-
-                  {/* Direct Links */}
-                  <div className="space-y-2">
-                    <Link
-                      href="/materials-guide"
-                      className="flex items-center space-x-3 p-2 rounded-lg
-                               text-gray-600 dark:text-gray-300
-                               hover:bg-gray-100 dark:hover:bg-[#252525]
-                               transition-colors duration-200"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      <BookOpen className="w-5 h-5 text-[#FF8C42]" />
-                      <span>Materials Guide</span>
-                    </Link>
-                    <Link
-                      href="/about"
-                      className="flex items-center space-x-3 p-2 rounded-lg
-                               text-gray-600 dark:text-gray-300
-                               hover:bg-gray-100 dark:hover:bg-[#252525]
-                               transition-colors duration-200"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      <Info className="w-5 h-5 text-[#FF8C42]" />
-                      <span>About</span>
-                    </Link>
                   </div>
                 </div>
               </div>

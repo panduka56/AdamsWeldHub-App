@@ -1,9 +1,8 @@
 import { Product } from '@/types/product'
 import { parseProducts } from './parseProducts'
 
-export async function getAllProducts(): Promise<Product[]> {
-  const products = await parseProducts()
-  return products
+export async function getProducts(): Promise<Product[]> {
+  return parseProducts()
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
@@ -11,12 +10,11 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   return products.find(p => p.Slug === slug) || null
 }
 
-export async function getRelatedProducts(product: Product): Promise<Product[]> {
+export async function getProductsByCategory(category: string): Promise<Product[]> {
   const products = await parseProducts()
   return products.filter(p => 
-    p.ID !== product.ID && 
     p.ProductCategories.some(cat => 
-      product.ProductCategories.includes(cat)
+      cat.toLowerCase() === category.toLowerCase()
     )
-  ).slice(0, 3)
+  )
 } 
