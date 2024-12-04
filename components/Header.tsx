@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Calculator, Settings } from 'lucide-react'
+import { Calculator, Settings, FileText, AlertTriangle, Shield, LineChart, BookText, Package, Percent, ShoppingCart, Mail, Sun, Moon, Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   DropdownMenu,
@@ -31,31 +31,31 @@ const toolsNavigation: NavItem[] = [
   { 
     name: 'Materials Guide', 
     href: '/materials-guide',
-    icon: Settings,
+    icon: FileText,
     description: 'Comprehensive material properties and compatibility'
   },
   { 
     name: 'Troubleshooting', 
     href: '/troubleshooting',
-    icon: Settings,
+    icon: AlertTriangle,
     description: 'Solutions for common welding issues'
   },
   { 
     name: 'Safety Tips', 
     href: '/safety-tips',
-    icon: Settings,
+    icon: Shield,
     description: 'Essential safety guidelines'
   },
   { 
     name: 'Gas Flow Chart', 
     href: '/gas-flow-chart',
-    icon: Settings,
+    icon: LineChart,
     description: 'Quick reference for gas flow settings'
   },
   { 
     name: 'Notes', 
     href: '/notes',
-    icon: Settings,
+    icon: BookText,
     description: 'Save calculations and important information'
   }
 ]
@@ -65,19 +65,19 @@ const productNavigation: NavItem[] = [
   { 
     name: 'All Products', 
     href: '/products',
-    icon: Settings,
+    icon: Package,
     description: 'Browse our complete product range'
   },
   { 
     name: 'Bulk Savings', 
     href: '/products/bulk-savings',
-    icon: Settings,
+    icon: Percent,
     description: 'Calculate volume discounts'
   },
   { 
     name: 'Quick Order', 
     href: '/products/quick-order',
-    icon: Settings,
+    icon: ShoppingCart,
     description: 'Fast reordering for regular customers'
   }
 ]
@@ -188,7 +188,7 @@ export default function Header() {
                           text-gray-600 dark:text-gray-300 hover:text-gray-900 
                           dark:hover:text-white"
               >
-                <Settings className="w-5 h-5" />
+                <Mail className="w-5 h-5" />
                 <span>Contact Us</span>
               </Link>
 
@@ -200,9 +200,9 @@ export default function Header() {
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? (
-                  <Settings className="w-5 h-5 text-[#e77402]" />
+                  <Sun className="w-5 h-5 text-[#e77402]" />
                 ) : (
-                  <Settings className="w-5 h-5 text-gray-600" />
+                  <Moon className="w-5 h-5 text-gray-600" />
                 )}
               </button>
 
@@ -215,9 +215,9 @@ export default function Header() {
                   aria-label="Toggle mobile menu"
                 >
                   {mobileMenuOpen ? (
-                    <Settings className="w-6 h-6" />
+                    <X className="w-6 h-6" />
                   ) : (
-                    <Settings className="w-6 h-6" />
+                    <Menu className="w-6 h-6" />
                   )}
                 </button>
               </div>
