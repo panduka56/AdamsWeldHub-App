@@ -9,15 +9,46 @@ interface ProductsListProps {
   initialProducts: Product[];
 }
 
+const categories = ['MIG Welding Gas', 'TIG Welding Gas', 'Oxy Fuel Gas', 'Trade - Beer & Cellar Gas', 'Calor Gas']
+
 export default function ProductsList({ initialProducts }: ProductsListProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string>('')
+  const [error, setError] = useState<string | null>(null)
+
+  console.log('ProductsList received products:', initialProducts.length)
 
   const filteredProducts = initialProducts.filter(product => {
     const matchesSearch = product.Title.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory = !selectedCategory || product.ProductCategories.includes(selectedCategory)
+    const matchesCategory = !selectedCategory || product.categories.some(cat => cat.includes(selectedCategory))
+    
+    console.log('Filtering product:', {
+      title: product.Title,
+      categories: product.categories,
+      matchesSearch,
+      matchesCategory
+    })
+
     return matchesSearch && matchesCategory
   })
+
+  console.log('Filtered products:', filteredProducts.length)
+
+  if (error) {
+    return (
+      <div className="text-center py-12 text-red-500">
+        Error: {error}
+      </div>
+    )
+  }
+
+  if (!initialProducts?.length) {
+    return (
+      <div className="text-center py-12 text-[#E5E5E5]/60">
+        No products available
+      </div>
+    )
+  }
 
   return (
     <div className="space-y-6">
@@ -41,7 +72,7 @@ export default function ProductsList({ initialProducts }: ProductsListProps) {
           className="bg-[#1A1A1A] border border-[#FF8C42]/20 rounded-lg px-4 text-[#E5E5E5]"
         >
           <option value="">All Categories</option>
-          {['MIG Welding Gas', 'TIG Welding Gas', 'Oxy Fuel Gas'].map(cat => (
+          {categories.map(cat => (
             <option key={cat} value={cat}>{cat}</option>
           ))}
         </select>

@@ -1,22 +1,17 @@
 export interface Product {
   ID: string;
   Title: string;
+  Content: string;
+  ImageURL: string;
+  ProductCategories: string;
   Slug: string;
-  Content?: string;
-  'Image URL'?: string;
-  imageUrl?: string;
-  VolumeLiters?: string;
-  PressureBar?: string;
-  GasMixPercentage?: string;
-  ProductCategories: string[];
   categories: string[];
+  GasMixPercentage: string;
+  VolumeLiters: string;
+  PressureBar: string;
   specifications: {
-    'Gas Type'?: string;
-    'Cylinder Size'?: string;
-    'Welding'?: string;
-    'Cutting'?: string;
-    'Heating'?: string;
-    'Brazing'?: string;
-    [key: string]: string | undefined;
+    'Gas Type': string;
+    'Cylinder Size': string;
+    [key: string]: string;
   };
 } 

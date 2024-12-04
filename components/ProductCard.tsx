@@ -7,9 +7,14 @@ import { Button } from '@/components/ui/button'
 import { Info, ExternalLink } from 'lucide-react'
 import { Product } from '@/types/product'
 import Image from 'next/image'
-import { CategoryDefaultImage, CategoryIcon, getCategoryColor } from './CategoryImages'
+import { CategoryDefaultImage, CategoryIcon } from './CategoryImages'
+import { motion } from 'framer-motion'
 
-export default function ProductCard({ product }: { product: Product }) {
+interface ProductCardProps {
+  product: Product;
+}
+
+export default function ProductCard({ product }: ProductCardProps) {
   const [imageError, setImageError] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const mainCategory = product.categories[0]
@@ -19,8 +24,8 @@ export default function ProductCard({ product }: { product: Product }) {
       className={`relative overflow-hidden group border-l-4 ${
         mainCategory === 'MIG Welding Gas' ? 'border-l-orange-500' :
         mainCategory === 'TIG Welding Gas' ? 'border-l-blue-500' :
-        mainCategory === 'Oxy Fuel Gas' ? 'border-l-gray-500' :
-        mainCategory === 'Tools' ? 'border-l-purple-500' :
+        mainCategory === 'Oxy Fuel Gas' ? 'border-l-purple-500' :
+        mainCategory === 'Trade - Beer & Cellar Gas' ? 'border-l-amber-500' :
         'border-l-gray-400'
       }`}
       onMouseEnter={() => setIsHovered(true)}
@@ -37,8 +42,8 @@ export default function ProductCard({ product }: { product: Product }) {
           <CategoryDefaultImage category={mainCategory} />
         ) : (
           <Image
-            src={product.imageUrl}
-            alt={product.name}
+            src={product.ImageURL}
+            alt={product.Title}
             fill
             className="object-contain p-4"
             onError={() => setImageError(true)}
@@ -49,53 +54,53 @@ export default function ProductCard({ product }: { product: Product }) {
       </div>
 
       {/* Product Info */}
-      <div className="p-4">
-        <h3 className="text-lg font-[350] mb-2">{product.name}</h3>
-        <div className="flex flex-wrap gap-2 mb-2">
+      <div className="p-6 space-y-4">
+        <h3 className="text-lg font-[500] text-gray-900 dark:text-white">
+          {product.Title}
+        </h3>
+
+        {/* Specifications */}
+        <div className="space-y-2">
+          <div className="flex items-center space-x-2 text-sm">
+            <span className="text-gray-500 dark:text-gray-400">Gas Type:</span>
+            <span className="font-medium text-[#FF8C42]">
+              {product.specifications['Gas Type']}
+            </span>
+          </div>
+          <div className="flex items-center space-x-2 text-sm">
+            <span className="text-gray-500 dark:text-gray-400">Size:</span>
+            <span className="font-medium">
+              {product.specifications['Cylinder Size']}
+            </span>
+          </div>
+        </div>
+
+        {/* Categories */}
+        <div className="flex flex-wrap gap-2">
           {product.categories.map((category, index) => (
             <span 
               key={index}
-              className={`text-sm px-2 py-1 rounded-full ${getCategoryColor(category)}`}
+              className="text-xs px-2 py-1 rounded-full bg-[#1A1A1A] 
+                       text-[#FF8C42] border border-[#FF8C42]/20"
             >
               {category}
             </span>
           ))}
         </div>
-        <div className="text-sm text-gray-600 dark:text-gray-400">
-          {product.specifications['Gas Type']} • {product.specifications['Cylinder Size']}
-        </div>
       </div>
-
-      {mainCategory === 'Oxy Fuel Gas' && (
-        <div className="px-4 pb-4 text-sm">
-          <div className="flex flex-wrap gap-x-4 gap-y-2 text-gray-500 dark:text-gray-400">
-            <div>
-              <span className="font-medium">Welding:</span> {product.specifications['Welding'] || '✓'}
-            </div>
-            <div>
-              <span className="font-medium">Cutting:</span> {product.specifications['Cutting'] || '✓'}
-            </div>
-            <div>
-              <span className="font-medium">Heating:</span> {product.specifications['Heating'] || '✓'}
-            </div>
-            <div>
-              <span className="font-medium">Brazing:</span> {product.specifications['Brazing'] || '✓'}
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Hover Overlay */}
       <div 
-        className={`absolute inset-0 bg-gradient-to-b from-black/90 to-black/95 
+        className={`absolute inset-0 bg-gradient-to-b from-black/80 to-black/95 
                    flex flex-col justify-end p-6 transition-all duration-300 
                    ${isHovered ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       >
         <div className="space-y-3">
-          <Link href={`/products/${product.slug}`} className="block">
+          <Link href={`/products/${product.Slug}`} className="block">
             <Button 
               variant="default" 
-              className="w-full bg-[#FF8C42] hover:bg-[#FF8C42]/90 flex items-center justify-center gap-2 py-6"
+              className="w-full bg-[#FF8C42] hover:bg-[#FF8C42]/90 
+                       flex items-center justify-center gap-2 py-6"
             >
               <Info className="w-4 h-4" />
               View Details
@@ -104,8 +109,8 @@ export default function ProductCard({ product }: { product: Product }) {
           <Link href="/stockists" className="block">
             <Button 
               variant="outline" 
-              className="w-full border-[#FF8C42]/20 text-[#FF8C42] hover:bg-[#FF8C42]/10
-                       flex items-center justify-center gap-2 py-6"
+              className="w-full border-[#FF8C42]/20 text-[#FF8C42] 
+                       hover:bg-[#FF8C42]/10 flex items-center justify-center gap-2 py-6"
             >
               <ExternalLink className="w-4 h-4" />
               Find Stockist

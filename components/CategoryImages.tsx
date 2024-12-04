@@ -1,4 +1,4 @@
-import { Flame, Zap, Wind, Droplet, Box } from 'lucide-react'
+import { Flame, Wind, Droplet, Box, Cylinder } from 'lucide-react'
 
 export const CategoryIcon = ({ category }: { category: string }) => {
   const { Icon, iconColor } = getIconAndColors(category)
@@ -28,7 +28,7 @@ function getIconAndColors(category: string) {
       }
     case 'TIG Welding Gas':
       return {
-        Icon: Zap,
+        Icon: Flame,
         bgColor: 'bg-blue-500/10',
         iconColor: 'text-blue-500',
         borderColor: 'border-blue-500/20'
@@ -36,11 +36,11 @@ function getIconAndColors(category: string) {
     case 'Oxy Fuel Gas':
       return {
         Icon: Wind,
-        bgColor: 'bg-gray-500/10',
-        iconColor: 'text-gray-500',
-        borderColor: 'border-gray-500/20'
+        bgColor: 'bg-purple-500/10',
+        iconColor: 'text-purple-500',
+        borderColor: 'border-purple-500/20'
       }
-    case 'Beer Gas':
+    case 'Trade - Beer & Cellar Gas':
       return {
         Icon: Droplet,
         bgColor: 'bg-amber-500/10',
@@ -49,7 +49,7 @@ function getIconAndColors(category: string) {
       }
     default:
       return {
-        Icon: Box,
+        Icon: Cylinder,
         bgColor: 'bg-gray-400/10',
         iconColor: 'text-gray-400',
         borderColor: 'border-gray-400/20'

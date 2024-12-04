@@ -75,7 +75,7 @@ const productNavigation: NavItem[] = [
   },
   { 
     name: 'Bulk Savings', 
-    href: '/tools/bulk-savings',
+    href: '/products/bulk-savings',
     icon: BarChart3,
     description: 'Calculate volume discounts'
   },
@@ -84,24 +84,6 @@ const productNavigation: NavItem[] = [
     href: '/products/quick-order',
     icon: ShoppingBag,
     description: 'Fast reordering for regular customers'
-  },
-  { 
-    name: 'MIG Welding Gas', 
-    href: '/products?category=mig',
-    icon: Flame,
-    description: 'MIG welding gas solutions'
-  },
-  { 
-    name: 'TIG Welding Gas', 
-    href: '/products?category=tig',
-    icon: Flame,
-    description: 'TIG welding gas solutions'
-  },
-  { 
-    name: 'Oxy Fuel Gas', 
-    href: '/products?category=oxy-fuel',
-    icon: Flame,
-    description: 'Oxy-fuel gas solutions'
   }
 ]
 
@@ -112,7 +94,8 @@ export default function Header() {
 
   useEffect(() => {
     setMounted(true)
-  }, [])
+    setTheme('dark')
+  }, [setTheme])
 
   if (!mounted) {
     return null
@@ -202,8 +185,18 @@ export default function Header() {
               </Link>
             </div>
 
-            {/* Right Side - Theme Toggle & Mobile Menu */}
+            {/* Right Side - Contact, Theme Toggle & Mobile Menu */}
             <div className="flex-1 flex items-center justify-end space-x-6">
+              <Link
+                href="mailto:sales@adamsgas.co.uk"
+                className="hidden md:flex items-center space-x-2 text-sm font-medium
+                          text-gray-600 dark:text-gray-300 hover:text-gray-900 
+                          dark:hover:text-white"
+              >
+                <Mail className="w-5 h-5" />
+                <span>Contact Us</span>
+              </Link>
+
               <button
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
                 className="p-2 rounded-lg bg-gray-100 dark:bg-[#252525] 
